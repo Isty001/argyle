@@ -3,7 +3,7 @@ name: Tests
 on: [push, pull_request]
 
 jobs:
-  test-ubuntu-2.6:
+  test-ubuntu-ruby26:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
