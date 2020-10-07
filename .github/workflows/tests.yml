@@ -17,7 +17,7 @@ jobs:
       run: bundle exec rake
       
   test-macos-ruby26:
-    runs-on: macOS
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
