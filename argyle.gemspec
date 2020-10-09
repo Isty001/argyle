@@ -1,8 +1,6 @@
-require_relative 'lib/argyle/version'
-
 Gem::Specification.new do |spec|
   spec.name          = "argyle"
-  spec.version       = Argyle::VERSION
+  spec.version       = "0.1.0"
   spec.authors       = ["Isty001"]
   spec.email         = ["isty001@gmail.com"]
 
@@ -25,4 +23,9 @@ Gem::Specification.new do |spec|
   spec.bindir        = "bin"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+  spec.add_runtime_dependency 'ncursesw'
+
+  spec.add_development_dependency 'rake', '~> 12.0'
+  spec.add_development_dependency 'minitest', '~> 5.0'
 end

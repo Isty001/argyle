@@ -2,11 +2,13 @@ PATH
   remote: .
   specs:
     argyle (0.1.0)
+      ncursesw
 
 GEM
   remote: https://rubygems.org/
   specs:
     minitest (5.14.2)
+    ncursesw (1.4.10)
     rake (12.3.3)
 
 PLATFORMS

@@ -1,6 +1,3 @@
-require "argyle/version"
+module Argyle end
 
-module Argyle
-  class Error < StandardError; end
-  # Your code goes here...
-end
+Dir[File.join(File.dirname(__FILE__), 'argyle', '*.rb')].each {|file| require file }
