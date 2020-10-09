@@ -1,6 +1,7 @@
 # Argyle
 
 ![Tests](https://github.com/Isty001/argyle/workflows/Tests/badge.svg)
+[![codecov](https://codecov.io/gh/Isty001/argyle/branch/master/graph/badge.svg)](https://codecov.io/gh/Isty001/argyle)
 
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/argyle`. To experiment with that code, run `bin/console` for an interactive prompt.
