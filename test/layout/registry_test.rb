@@ -3,7 +3,7 @@ require 'test'
 class LayoutRegistryTest < Minitest::Test
 
   def test_happy_path
-    original = Argyle::Layout.new
+    original = Argyle::Layout.new({})
     clone = original.clone
     original.expects(:clone).returns(clone)
 

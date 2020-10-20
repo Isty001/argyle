@@ -12,7 +12,7 @@ class PageFactorytest < Minitest::Test
   end
 
   def test_happy_path
-    layout = Argyle::Layout.new
+    layout = Argyle::Layout.new({})
 
     registry = mock
     registry.expects(:clone).with(:main).returns(layout)
@@ -32,7 +32,7 @@ class PageFactorytest < Minitest::Test
   end
 
   def test_default_layout
-    layout = Argyle::Layout.new
+    layout = Argyle::Layout.new({})
 
     registry = mock
     registry.expects(:clone).with(:default).returns(layout)
