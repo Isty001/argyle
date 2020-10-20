@@ -15,10 +15,10 @@ jobs:
         ruby-version: 2.6
     - name: Install dependencies
       run: bundle install
-      env:
-        GENERATE_COVERAGE: 1
     - name: Run tests
       run: bundle exec rake
+      env:
+        GENERATE_COVERAGE: 1
 
   test-macos-ruby26:
     runs-on: macos-latest
