@@ -1,12 +1,13 @@
 # Argyle
 
 
-[![codecov](https://codecov.io/gh/Isty001/argyle/branch/master/graph/badge.svg)](https://codecov.io/gh/Isty001/argyle)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/cc216aebb30d483a9384514c24f26ba1)](https://www.codacy.com/gh/Isty001/argyle/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Isty001/argyle&amp;utm_campaign=Badge_Grade)
-
 | Ruby 2.6  | Ruby 2.7 |
 | ------------- | ------------- |
 | ![Ruby 2.6](https://github.com/Isty001/argyle/workflows/Tests/badge.svg)  | --  |
+
+
+[![codecov](https://codecov.io/gh/Isty001/argyle/branch/master/graph/badge.svg)](https://codecov.io/gh/Isty001/argyle)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/cc216aebb30d483a9384514c24f26ba1)](https://www.codacy.com/gh/Isty001/argyle/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Isty001/argyle&amp;utm_campaign=Badge_Grade)
 
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/argyle`. To experiment with that code, run `bin/console` for an interactive prompt.
