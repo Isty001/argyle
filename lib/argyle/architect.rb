@@ -1,3 +1,0 @@
-class Argyle::Architect
-
-end

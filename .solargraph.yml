@@ -1,0 +1,5 @@
+include:
+  - "**/*.rb"
+require:
+  - "minitest"
+max_files: 5000

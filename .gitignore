@@ -9,3 +9,4 @@
 *.gem
 sandbox/
 .yardoc/
+Gemfile.lock
