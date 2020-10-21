@@ -5,7 +5,7 @@
 
 | Ruby 2.6  | Ruby 2.7 |
 | ------------- | ------------- |
-| ![Ruby 2.6](https://github.com/Isty001/argyle/workflows/Tests/badge.svg)  | --  |
+| ![Test Ruby 2.6](https://github.com/Isty001/argyle/workflows/Test%20Ruby%202.6/badge.svg) | ![Test Ruby 2.7](https://github.com/Isty001/argyle/workflows/Test%20Ruby%202.7/badge.svg) |
 
 ---
 
