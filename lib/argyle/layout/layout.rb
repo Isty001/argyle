@@ -1,3 +1,7 @@
 module Argyle::Layout end
 
-Dir[File.join(__dir__, '*.rb')].each { |file| require file unless __FILE__ == file }
+require_relative 'area.rb'
+require_relative 'base.rb'
+require_relative 'default.rb'
+require_relative 'factory.rb'
+require_relative 'registry.rb'
