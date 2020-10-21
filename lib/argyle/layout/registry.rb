@@ -8,9 +8,11 @@ class Argyle::Layout::Registry
   # @param layout [Argyle::Layout::Base]
   #
   # @raise [Argyle::Error::TypeError] If layout is not an instance of Argyle::Layout::Base
+  # @raise [Argyle::Error::ArgumentError] If he layout has no id set
   #
-  def set(layout)
+  def add(layout)
     raise Argyle::Error::TypeError.new("Layout must be an instance of #{Argyle::Layout::Base}") unless layout.is_a?(Argyle::Layout::Base)
+    raise Argyle::Error::ArgumentError.new("Layout #{layout.class} has no id") if layout.class.identifier.nil?
 
     @layouts[layout.class.identifier] = layout
   end

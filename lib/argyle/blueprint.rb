@@ -23,7 +23,7 @@ class Argyle::Blueprint
   private
   def create_layout_registry
     registry = Argyle::Layout::Registry.new
-    registry.set(@layout_factory.create(Argyle::Layout::Default))
+    registry.add(@layout_factory.create(Argyle::Layout::Default))
 
     registry
   end
@@ -32,7 +32,9 @@ class Argyle::Blueprint
 
   # @param page_klass [Class<Argyle::Page::Base>] Subclass of Argyle::Page::Base
   #
-  def set_page(page_klass)
+  def add_page(page_klass)
+    raise Argyle::Error::ArgumentError.new("Page #{page_klass} has no id") if page_klass.identifier.nil?
+
     page = @page_factory.create(page_klass)
     @pages[page_klass.identifier] = page
 
