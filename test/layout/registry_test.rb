@@ -3,7 +3,7 @@ require 'test'
 class LayoutRegistryTest < Minitest::Test
 
   def test_happy_path
-    original = Argyle::Layout.new({})
+    original = Argyle::Layout::Base.new({})
     clone = original.clone
     original.expects(:clone).returns(clone)
 
@@ -20,7 +20,7 @@ class LayoutRegistryTest < Minitest::Test
       registry.set(:test_2, :symbol)
     end
 
-    assert_equal("Layout must be an instance of #{Argyle::Layout}", error.message)
+    assert_equal("Layout must be an instance of #{Argyle::Layout::Base}", error.message)
   end
 
   def test_unknown_layout

@@ -2,7 +2,7 @@ require 'test'
 
 class LayoutRegistryTest < Minitest::Test
 
-  class TestLayout < Argyle::Layout
+  class TestLayout < Argyle::Layout::Base
     area(:header)
     area(:footer)
   end
@@ -31,7 +31,7 @@ class LayoutRegistryTest < Minitest::Test
       factory.create(19)
     end
 
-    assert_equal(error.message, "Expected subclass of #{Argyle::Layout.name}, Integer given")
+    assert_equal(error.message, "Expected subclass of #{Argyle::Layout::Base.name}, Integer given")
   end
 
   def test_invalid_class
@@ -41,6 +41,6 @@ class LayoutRegistryTest < Minitest::Test
       factory.create(Float)
     end
 
-    assert_equal(error.message, "Expected subclass of #{Argyle::Layout.name}, Float given")
+    assert_equal(error.message, "Expected subclass of #{Argyle::Layout::Base.name}, Float given")
   end
 end

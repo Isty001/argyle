@@ -2,16 +2,16 @@ require 'test'
 
 class BlueprintPageTest < Minitest::Test
 
-  class TestPage1 < Argyle::Page
+  class TestPage1 < Argyle::Page::Base
   end
 
-  class TestPage2 < Argyle::Page
+  class TestPage2 < Argyle::Page::Base
   end
 
-  def test_add_page
+  def test_set_page
     blueprint = Argyle::Blueprint.new
-    blueprint.add_page(:test_1, TestPage1)
-    blueprint.add_page(:test_2, TestPage2)
+    blueprint.set_page(:test_1, TestPage1)
+    blueprint.set_page(:test_2, TestPage2)
 
     pages = blueprint.pages
     assert_equal(2, pages.length)
@@ -19,17 +19,6 @@ class BlueprintPageTest < Minitest::Test
 
     assert_equal(TestPage1, pages[:test_1].class)
     assert_equal(TestPage2, pages[:test_2].class)
-  end
-
-  def test_existing_id
-    blueprint = Argyle::Blueprint.new
-    blueprint.add_page(:test_1, TestPage1)
-
-    error = assert_raises(Argyle::Error::ArgumentError) do
-      blueprint.add_page(:test_1, TestPage2)
-    end
-
-    assert_equal(error.message, 'Page test_1 already exists')
   end
 
   def test_no_current_page
@@ -44,8 +33,8 @@ class BlueprintPageTest < Minitest::Test
 
   def test_first_page_as_current
     blueprint = Argyle::Blueprint.new
-    blueprint.add_page(:test_1, TestPage1)
-    blueprint.add_page(:test_2, TestPage2)
+    blueprint.set_page(:test_1, TestPage1)
+    blueprint.set_page(:test_2, TestPage2)
 
     assert_instance_of(TestPage1, blueprint.current_page)
   end
@@ -62,8 +51,8 @@ class BlueprintPageTest < Minitest::Test
 
   def test_set_current_page
     blueprint = Argyle::Blueprint.new
-    blueprint.add_page(:first, TestPage1)
-    blueprint.add_page(:second, TestPage2)
+    blueprint.set_page(:first, TestPage1)
+    blueprint.set_page(:second, TestPage2)
 
     blueprint.current_page = :second
 

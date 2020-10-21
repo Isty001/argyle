@@ -29,20 +29,16 @@ class Argyle::Blueprint
   public
 
   # @param id [Symbol]
-  # @param page [Class<Argyle::Page>] Subclass of Argyle::Page
+  # @param page [Class<Argyle::Page::Base>] Subclass of Argyle::Page::Base
   #
-  # @raise [Argyle::Error::ArgumentError] If the id already exists
-  #
-  def add_page(id, page_klass)
-    raise Argyle::Error::ArgumentError.new("Page #{id} already exists") if @pages.include?(id)
-
+  def set_page(id, page_klass)
     page = @page_factory.create(page_klass)
     @pages[id] = page
 
     @current_page = page if @current_page.nil?
   end
 
-  # @return [Argyle::Page]
+  # @return [Argyle::Page::Base]
   #
   # @raise [Argyle::Error::RuntimeError] If no pages defined yet
   #

@@ -5,7 +5,7 @@ class Argyle::Renderer
     }
   end
 
-  # @param page [Argyle::Page]
+  # @param page [Argyle::Page::Base]
   #
   def render(page)
     page.components.each do |component|

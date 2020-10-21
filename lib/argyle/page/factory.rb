@@ -6,18 +6,18 @@ class Argyle::Page::Factory
     @layout_registry = layout_registry
   end
 
-  # @param klass [Class<Argyle::Page>] Subclass of Argyle::Page
+  # @param klass [Class<Argyle::Page::Base>] Subclass of Argyle::Page
   #
-  # @return [Argyle::Page]
+  # @return [Argyle::Page::Base]
   #
   # @raise [Argyle::Error::TypeError] If the page is not a subclass of Argyle::Page
   #
   def create(klass)
-    Argyle::Assert.klass(Argyle::Page, klass)
+    Argyle::Assert.klass(Argyle::Page::Base, klass)
 
-    components = klass.component_prototypes.map do |id, prototype|
-      [id, prototype.klass.new(**prototype.parameters)]
-    end.to_h
+    components = klass.component_prototypes.transform_values do |prototype|
+      prototype.klass.new(**prototype.parameters)
+    end
 
     klass.new(
       components,
