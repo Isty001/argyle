@@ -6,7 +6,7 @@ class LayoutRegistryTest < Minitest::Test
     id(:test)
   end
 
-  def test_happy_path
+  def test_registry_happy_path
     original = TestLayout.new({})
     clone = original.clone
     original.expects(:clone).returns(clone)
