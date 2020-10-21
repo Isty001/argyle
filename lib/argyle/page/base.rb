@@ -1,5 +1,12 @@
-require 'ostruct'
-
+# @!attribute [r] components
+#   @return [Hash{Symbol=>???}]
+#
+# @!attribute [r] layout
+#   @return [Argyle::Layout::Base]
+#
+# @!attribute [r] identifier
+#   @return [Symbol]
+#
 class Argyle::Page::Base
 
   attr_reader :components, :layout
@@ -15,10 +22,19 @@ class Argyle::Page::Base
   # @!attribute [r] layout_id
   #   @return [Symbol]
   #
+  # @!attribute [r] id
+  #   @return [Symbol]
+  #
   class << self
-    attr_reader :component_prototypes, :layout_id
+    attr_reader :component_prototypes, :layout_id, :identifier
 
     private
+
+    # @param id [Symbol]
+    #
+    def id(id)
+      @identifier = id
+    end
 
     # @param id [Symbol]
     # @param value [String]
@@ -29,10 +45,14 @@ class Argyle::Page::Base
 
     # @param id [Symbol]
     #
+    # @raise [Argyle::Error::RuntimeError] When area calls are nested
+    #
     def area(id)
+      raise Argyle::Error::RuntimeError.new('Areas cannot be nested') unless :main == @current_area
+
       @current_area = id
       yield
-      @current_area = nil
+      @current_area = :main
     end
 
     # @param id [Symbol]
@@ -42,7 +62,8 @@ class Argyle::Page::Base
     end
 
     def inherited(klass)
-      klass.instance_variable_set('@current_area', nil)
+      klass.instance_variable_set('@identifier', nil)
+      klass.instance_variable_set('@current_area', :main)
 
       klass.instance_variable_set('@component_prototypes', component_prototypes || {})
       klass.instance_variable_set('@layout_id', layout_id)

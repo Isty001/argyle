@@ -13,7 +13,9 @@ class Argyle::Layout::Factory
       prototype.klass.new(prototype.parameters)
     end
 
-    klass.new(areas)
+    windows = areas.map(&method(:create_window)).to_h
+
+    klass.new(areas, windows)
   end
 
   private
@@ -22,7 +24,16 @@ class Argyle::Layout::Factory
   #
   # @return [Ncurses::WINDOW]
   #
-  def window_for(area)
+  def create_window(id, area)
+    max_height = Ncurses.getmaxy(Ncurses.stdscr)
+    max_width = Ncurses.getmaxx(Ncurses.stdscr)
 
+    width = area.width || max_width
+    height = area.height || max_height
+
+    y = 0
+    x = 0
+
+    [id, Ncurses::WINDOW.new(height, width, y, x)]
   end
 end

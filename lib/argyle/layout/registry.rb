@@ -9,10 +9,10 @@ class Argyle::Layout::Registry
   #
   # @raise [Argyle::Error::TypeError] If layout is not an instance of Argyle::Layout::Base
   #
-  def set(id, layout)
+  def set(layout)
     raise Argyle::Error::TypeError.new("Layout must be an instance of #{Argyle::Layout::Base}") unless layout.is_a?(Argyle::Layout::Base)
 
-    @layouts[id] = layout
+    @layouts[layout.class.identifier] = layout
   end
 
   # @param id [Symbol]

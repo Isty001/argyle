@@ -8,57 +8,42 @@ class Argyle::Blueprint
   # @param layout_factory [Argyle::Layout::Factory]
   # @param layout_registry [Argyle::Layout::Registry]
   # @param page_factory [Argyle::Page::Factory]
+  # @param renderer [Argyle::Renderer]
   #
-  def initialize(layout_factory: nil, layout_registry: nil, page_factory: nil)
+  def initialize(layout_factory: nil, layout_registry: nil, page_factory: nil, renderer: nil)
     @pages = {}
     @layouts = []
     @current_page = nil
     @layout_factory = layout_factory || Argyle::Layout::Factory.new
     @layout_registry = layout_registry || create_layout_registry
     @page_factory = page_factory || Argyle::Page::Factory.new(@layout_registry)
+    @renderer = renderer || Argyle::Renderer.new
   end
 
   private
   def create_layout_registry
     registry = Argyle::Layout::Registry.new
-    registry.set(:default, @layout_factory.create(Argyle::Layout::Default))
+    registry.set(@layout_factory.create(Argyle::Layout::Default))
 
     registry
   end
 
   public
 
-  # @param id [Symbol]
-  # @param page [Class<Argyle::Page::Base>] Subclass of Argyle::Page::Base
+  # @param page_klass [Class<Argyle::Page::Base>] Subclass of Argyle::Page::Base
   #
-  def set_page(id, page_klass)
+  def set_page(page_klass)
     page = @page_factory.create(page_klass)
-    @pages[id] = page
+    @pages[page_klass.identifier] = page
 
     @current_page = page if @current_page.nil?
   end
 
-  # @return [Argyle::Page::Base]
+  # @note Renders the current page
   #
-  # @raise [Argyle::Error::RuntimeError] If no pages defined yet
-  #
-  def current_page
-    raise Argyle::Error::RuntimeError.new('No pages defined yet') if @pages.empty?
-
-    @current_page
-  end
-
-  # @param id [Symbol]
-  #
-  # @raise [Argyle::Error::NotFound] If no page exists with the id
-  #
-  def current_page=(id)
-    raise Argyle::Error::NotFound.new("Unknown page: #{id}") unless @pages.include?(id)
-
-    @current_page = @pages[id]
-  end
-
   def render
+    raise Argyle::Error::NotFound.new('No pages defined yet') if @pages.empty?
+
     @renderer.render(@current_page)
   end
 end

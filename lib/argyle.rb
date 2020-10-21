@@ -1,8 +1,30 @@
+require 'ncursesw'
+
 module Argyle
   def self.activate
     return if active?
 
+    Ncurses.initscr
+    Ncurses.start_color
+    Ncurses.use_default_colors
+    Ncurses.cbreak
+    Ncurses.noecho
+    # Ncurses.curs_set(0)
+    Ncurses.stdscr.intrflush(false)
+    Ncurses.stdscr.keypad(true)
+    Ncurses.stdscr.nodelay(true)
+
     @@active = true
+  end
+
+  def self.deactivate
+    return unless active?
+
+    Ncurses.echo
+    Ncurses.nl
+    Ncurses.endwin
+
+    @@active = false
   end
 
   def self.active?
@@ -10,13 +32,6 @@ module Argyle
   end
 end
 
-Argyle.activate
-
-at_exit do
-  # p Argyle.active?
-end
-
-require 'ncursesw'
 
 Dir[File.join(__dir__, 'argyle', '*.rb')].each { |file| require file unless __FILE__ == file }
 

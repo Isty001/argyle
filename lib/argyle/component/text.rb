@@ -1,8 +1,9 @@
-class Argyle::Component::Text
-  attr_reader :value, :area
+class Argyle::Component::Text < Argyle::Component::Base
+  attr_reader :value
 
-  def initialize(value:, area:)
+  def initialize(area:, value:)
+    super(area: area)
+
     @value = value
-    @area = area
   end
 end

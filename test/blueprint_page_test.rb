@@ -3,15 +3,17 @@ require 'test'
 class BlueprintPageTest < Minitest::Test
 
   class TestPage1 < Argyle::Page::Base
+    id(:test_1)
   end
 
   class TestPage2 < Argyle::Page::Base
+    id(:test_2)
   end
 
   def test_set_page
     blueprint = Argyle::Blueprint.new
-    blueprint.set_page(:test_1, TestPage1)
-    blueprint.set_page(:test_2, TestPage2)
+    blueprint.set_page(TestPage1)
+    blueprint.set_page(TestPage2)
 
     pages = blueprint.pages
     assert_equal(2, pages.length)
@@ -24,38 +26,23 @@ class BlueprintPageTest < Minitest::Test
   def test_no_current_page
     blueprint = Argyle::Blueprint.new
 
-    error = assert_raises(Argyle::Error::RuntimeError) do
-      blueprint.current_page
+    error = assert_raises(Argyle::Error::NotFound) do
+      blueprint.render
     end
 
     assert_equal('No pages defined yet', error.message)
   end
 
   def test_first_page_as_current
-    blueprint = Argyle::Blueprint.new
-    blueprint.set_page(:test_1, TestPage1)
-    blueprint.set_page(:test_2, TestPage2)
-
-    assert_instance_of(TestPage1, blueprint.current_page)
-  end
-
-  def test_set_unknown_current_page
-    blueprint = Argyle::Blueprint.new
-
-    error = assert_raises(Argyle::Error::NotFound) do
-      blueprint.current_page = :test
+    renderer = mock
+    renderer.expects(:render).with do |page|
+      page.is_a?(TestPage1)
     end
 
-    assert_equal("Unknown page: test", error.message)
-  end
+    blueprint = Argyle::Blueprint.new(renderer: renderer)
+    blueprint.set_page(TestPage1)
+    blueprint.set_page(TestPage2)
 
-  def test_set_current_page
-    blueprint = Argyle::Blueprint.new
-    blueprint.set_page(:first, TestPage1)
-    blueprint.set_page(:second, TestPage2)
-
-    blueprint.current_page = :second
-
-    assert_instance_of(TestPage2, blueprint.current_page)
+    blueprint.render
   end
 end
