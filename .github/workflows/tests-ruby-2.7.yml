@@ -3,7 +3,7 @@ name: Test Ruby 2.7
 on: [push, pull_request]
 
 jobs:
-  test-ubuntu-ruby26:
+  test-ubuntu-ruby27:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -20,7 +20,7 @@ jobs:
       env:
         GENERATE_COVERAGE: 1
 
-  test-macos-ruby26:
+  test-macos-ruby27:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
