@@ -35,5 +35,5 @@ jobs:
       run: bundle install
     - name: Run tests
       run: bundle exec rake
-    - env:
+      env:
         TERM: xterm
