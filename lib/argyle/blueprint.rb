@@ -2,7 +2,6 @@
 #   @return [Hash{Symbol=>Argyle::Page}]
 #
 class Argyle::Blueprint
-
   attr_reader :pages
 
   # @param layout_factory [Argyle::Layout::Factory]
@@ -21,6 +20,7 @@ class Argyle::Blueprint
   end
 
   private
+
   def create_layout_registry
     registry = Argyle::Layout::Registry.new
     registry.add(@layout_factory.create(Argyle::Layout::Default))

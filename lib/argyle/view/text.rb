@@ -1,5 +1,4 @@
 class Argyle::View::Text < Argyle::View::Base
-
   # @param component [Argyle::Component::Text]
   #
   def render(window, component)

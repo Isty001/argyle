@@ -1,5 +1,4 @@
 class Argyle::Page::Factory
-
   # @param layout_registry [Argyle::Layout::Registry]
   #
   def initialize(layout_registry)

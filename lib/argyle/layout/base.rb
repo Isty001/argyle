@@ -8,13 +8,12 @@
 #   @return [Symbol]
 #
 class Argyle::Layout::Base
-
   attr_reader :areas, :windows
 
   # @param areas [Hash{Symbol=>Argyle::Layout::Area}]
   # @param windows [Hash{Symbol=>Ncurses::WINDOW}] Mapped to the corresponding Area
   #
-  def initialize(areas, windows =  {})
+  def initialize(areas, windows)
     @areas = areas
     @windows = windows
   end
@@ -42,6 +41,8 @@ class Argyle::Layout::Base
     end
 
     def inherited(klass)
+      super
+
       klass.instance_variable_set('@area_prototypes', area_prototypes || {})
 
       klass.area(:main)

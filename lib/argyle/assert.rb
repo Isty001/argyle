@@ -1,11 +1,11 @@
 class Argyle::Assert
   class << self
     def klass(expected, actual)
-      unless actual.respond_to?(:superclass) && expected == actual.superclass
-        actual_name = actual.respond_to?(:name) ? actual.name : actual.class
+      return if actual.respond_to?(:superclass) && expected == actual.superclass
 
-        raise Argyle::Error::TypeError.new("Expected subclass of #{expected.name}, #{actual_name} given")
-      end
+      actual_name = actual.respond_to?(:name) ? actual.name : actual.class
+
+      raise Argyle::Error::TypeError.new("Expected subclass of #{expected.name}, #{actual_name} given")
     end
   end
 end

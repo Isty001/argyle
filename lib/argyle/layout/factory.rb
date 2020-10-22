@@ -1,5 +1,4 @@
 class Argyle::Layout::Factory
-
   # @param klass [Class<Argyle::Layout::Base>] Subclass of Argyle::Layout::Base
   #
   # @return [Argyle::Layout::Base]

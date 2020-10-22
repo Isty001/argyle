@@ -1,7 +1,6 @@
 require 'test'
 
 class RendererTest < Minitest::Test
-
   class TestComponent < Argyle::Component::Base
     def initialize
       super(area: :test)
@@ -37,9 +36,7 @@ class RendererTest < Minitest::Test
     layout = mock
     layout.expects(:windows).returns({test: mock})
 
-    page = mock
-    page.expects(:components).returns({test: TestComponent.new})
-    page.expects(:layout).returns(layout)
+    page = new_page(layout, {test: TestComponent.new})
 
     error = assert_raises(Argyle::Error::NotFound) do
       renderer.render(page)
@@ -55,9 +52,7 @@ class RendererTest < Minitest::Test
     layout = mock
     layout.expects(:windows).returns({})
 
-    page = mock
-    page.expects(:components).returns({test: TestComponent.new})
-    page.expects(:layout).returns(layout)
+    page = new_page(layout, {test: TestComponent.new})
 
     error = assert_raises(Argyle::Error::NotFound) do
       renderer.render(page)
@@ -80,12 +75,19 @@ class RendererTest < Minitest::Test
 
     component = TestComponent.new
 
-    page = mock
-    page.expects(:components).returns({test: component})
-    page.expects(:layout).returns(layout)
-
+    page = new_page(layout, {test: component})
     view.expects(:render).with(window, component)
 
     renderer.render(page)
+  end
+
+  private
+
+  def new_page(layout, components)
+    page = mock
+    page.expects(:components).returns(components)
+    page.expects(:layout).returns(layout)
+
+    page
   end
 end

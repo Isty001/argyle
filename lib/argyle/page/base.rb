@@ -8,7 +8,6 @@
 #   @return [Symbol]
 #
 class Argyle::Page::Base
-
   attr_reader :components, :layout
 
   def initialize(components, layout)
@@ -48,7 +47,7 @@ class Argyle::Page::Base
     # @raise [Argyle::Error::RuntimeError] When area calls are nested
     #
     def area(id)
-      raise Argyle::Error::RuntimeError.new('Areas cannot be nested') unless :main == @current_area
+      raise Argyle::Error::RuntimeError.new('Areas cannot be nested') unless @current_area == :main
 
       @current_area = id
       yield
@@ -62,6 +61,8 @@ class Argyle::Page::Base
     end
 
     def inherited(klass)
+      super
+
       klass.instance_variable_set('@identifier', nil)
       klass.instance_variable_set('@current_area', :main)
 
@@ -70,5 +71,3 @@ class Argyle::Page::Base
     end
   end
 end
-
-

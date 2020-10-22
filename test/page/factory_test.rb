@@ -12,7 +12,7 @@ class PageFactorytest < Minitest::Test
   end
 
   def test_happy_path
-    layout = Argyle::Layout::Base.new({})
+    layout = new_layout
 
     registry = mock
     registry.expects(:clone).with(:main).returns(layout)
@@ -23,16 +23,16 @@ class PageFactorytest < Minitest::Test
     assert_equal(2, page.components.length)
 
     title = page.components[:title]
-    assert_equal("Hello", title.value)
+    assert_equal('Hello', title.value)
 
     header = page.components[:header]
-    assert_equal("Test", header.value)
+    assert_equal('Test', header.value)
 
     assert_equal(layout, page.layout)
   end
 
   def test_default_layout
-    layout = Argyle::Layout::Base.new({})
+    layout = new_layout
 
     registry = mock
     registry.expects(:clone).with(:default).returns(layout)
@@ -48,7 +48,7 @@ class PageFactorytest < Minitest::Test
     factory = Argyle::Page::Factory.new(mock)
 
     error = assert_raises(Argyle::Error::TypeError) do
-      factory.create("asd")
+      factory.create('asd')
     end
 
     assert_equal(error.message, "Expected subclass of #{Argyle::Page::Base.name}, String given")
@@ -62,5 +62,11 @@ class PageFactorytest < Minitest::Test
     end
 
     assert_equal(error.message, "Expected subclass of #{Argyle::Page::Base.name}, Symbol given")
+  end
+
+  private
+
+  def new_layout
+    Argyle::Layout::Base.new({}, {})
   end
 end

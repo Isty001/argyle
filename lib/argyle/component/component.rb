@@ -1,4 +1,4 @@
 module Argyle::Component end
 
-require_relative 'base.rb'
-require_relative 'text.rb'
+require_relative 'base'
+require_relative 'text'

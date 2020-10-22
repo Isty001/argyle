@@ -1,7 +1,6 @@
 require 'test'
 
 class BlueprintPageTest < Minitest::Test
-
   class TestPage1 < Argyle::Page::Base
     id(:test_1)
   end
@@ -20,7 +19,7 @@ class BlueprintPageTest < Minitest::Test
 
     pages = blueprint.pages
     assert_equal(2, pages.length)
-    assert_equal([:test_1, :test_2], pages.keys)
+    assert_equal(%i[test_1 test_2], pages.keys)
 
     assert_equal(TestPage1, pages[:test_1].class)
     assert_equal(TestPage2, pages[:test_2].class)

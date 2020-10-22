@@ -6,14 +6,9 @@ if ENV['GENERATE_COVERAGE']
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
 
-$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
-require_relative "../lib/argyle.rb"
-require "minitest/autorun"
+require 'minitest/autorun'
 require 'mocha/minitest'
 
-Ncurses.initscr
-
-at_exit do 
-  Ncurses.endwin
-end
+require_relative '../lib/argyle'

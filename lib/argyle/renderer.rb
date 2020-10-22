@@ -14,7 +14,9 @@ class Argyle::Renderer
   def set_view(component_klass, view)
     Argyle::Assert.klass(Argyle::Component::Base, component_klass)
 
-    raise Argyle::Error::TypeError.new("View must be an instance of #{Argyle::View::Base.name}") unless view.is_a?(Argyle::View::Base)
+    unless view.is_a?(Argyle::View::Base)
+      raise Argyle::Error::TypeError.new("View must be an instance of #{Argyle::View::Base.name}")
+    end
 
     @views[component_klass] = view
   end
@@ -25,14 +27,16 @@ class Argyle::Renderer
   # @raise [Argyle::Error::NotFound] If the layout has no associated window for the a component's area
   #
   def render(page)
-    layout = page.layout
-    windows = layout.windows
+    windows = page.layout.windows
 
     page.components.each_value do |component|
       component_class = component.class
       area = component.area
 
-      raise Argyle::Error::NotFound.new("View not found fo component #{component_class}") unless @views.include?(component_class)
+      unless @views.include?(component_class)
+        raise Argyle::Error::NotFound.new("View not found fo component #{component_class}")
+      end
+
       raise Argyle::Error::NotFound.new("Window not found for area: #{area}") unless windows.include?(area)
 
       @views[component_class].render(windows[area], component)

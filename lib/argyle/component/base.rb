@@ -1,5 +1,4 @@
 class Argyle::Component::Base
-
   attr_reader :area
 
   # @param area [Symbol]

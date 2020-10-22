@@ -1,7 +1,6 @@
 require 'test'
 
 class LayoutRegistryTest < Minitest::Test
-
   class TestLayout < Argyle::Layout::Base
     id(:test)
   end
@@ -10,7 +9,7 @@ class LayoutRegistryTest < Minitest::Test
   end
 
   def test_registry_happy_path
-    original = TestLayout.new({})
+    original = TestLayout.new({}, {})
     clone = original.clone
     original.expects(:clone).returns(clone)
 
@@ -24,7 +23,7 @@ class LayoutRegistryTest < Minitest::Test
     registry = Argyle::Layout::Registry.new
 
     error = assert_raises(Argyle::Error::ArgumentError) do
-      registry.add(TestLayoutNoId.new({}))
+      registry.add(TestLayoutNoId.new({}, {}))
     end
 
     assert_equal('Layout LayoutRegistryTest::TestLayoutNoId has no id', error.message)
@@ -47,6 +46,6 @@ class LayoutRegistryTest < Minitest::Test
       registry.clone(:test)
     end
 
-    assert_equal("Unknown layout: test", error.message)
+    assert_equal('Unknown layout: test', error.message)
   end
 end
