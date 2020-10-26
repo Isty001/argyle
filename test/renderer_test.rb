@@ -11,27 +11,27 @@ class RendererTest < Minitest::Test
   end
 
   def test_set_view_invalid_component
-    renderer = Argyle::Renderer.new
+    renderer = Argyle::Renderer.new(mock)
 
     error = assert_raises(Argyle::Error::TypeError) do
-      renderer.set_view(String, TestView.new)
+      renderer.set_view(String, TestView)
     end
 
     assert_equal("Expected subclass of #{Argyle::Component::Base.name}, String given", error.message)
   end
 
   def test_set_view_invalid_view
-    renderer = Argyle::Renderer.new
+    renderer = Argyle::Renderer.new(mock)
 
     error = assert_raises(Argyle::Error::TypeError) do
       renderer.set_view(TestComponent, 'some string')
     end
 
-    assert_equal("View must be an instance of #{Argyle::View::Base.name}", error.message)
+    assert_equal("Expected subclass of #{Argyle::View::Base}, String given", error.message)
   end
 
   def test_no_view_for_component
-    renderer = Argyle::Renderer.new
+    renderer = Argyle::Renderer.new(mock)
 
     layout = mock
     layout.expects(:windows).returns({test: mock})
@@ -46,8 +46,8 @@ class RendererTest < Minitest::Test
   end
 
   def test_no_window_for_area
-    renderer = Argyle::Renderer.new
-    renderer.set_view(TestComponent, TestView.new)
+    renderer = Argyle::Renderer.new(mock)
+    renderer.set_view(TestComponent, TestView)
 
     layout = mock
     layout.expects(:windows).returns({})
@@ -61,11 +61,14 @@ class RendererTest < Minitest::Test
     assert_equal('Window not found for area: test', error.message)
   end
 
-  def test_happy_path
-    view = TestView.new
+  def test_add_view_class
+    container = mock
 
-    renderer = Argyle::Renderer.new
-    renderer.set_view(TestComponent, view)
+    view = mock
+    TestView.expects(:new).with(container).returns(view)
+
+    renderer = Argyle::Renderer.new(container)
+    renderer.set_view(TestComponent, TestView)
 
     window = mock
     window.expects(:refresh)

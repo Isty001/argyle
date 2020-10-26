@@ -1,5 +1,5 @@
 # @!attribute [r] components
-#   @return [Hash{Symbol=>???}]
+#   @return [Hash{Symbol=>Argyle::Component::Base}]
 #
 # @!attribute [r] layout
 #   @return [Argyle::Layout::Base]

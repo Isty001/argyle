@@ -14,9 +14,7 @@ class Argyle::Page::Factory
   def create(klass)
     Argyle::Assert.klass(Argyle::Page::Base, klass)
 
-    components = klass.component_prototypes.transform_values do |prototype|
-      prototype.klass.new(**prototype.parameters)
-    end
+    components = klass.component_prototypes.transform_values(&:unwrap)
 
     klass.new(
       components,

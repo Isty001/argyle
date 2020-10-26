@@ -5,4 +5,8 @@ class Argyle::Prototype
     @klass = klass
     @parameters = parameters
   end
+
+  def unwrap
+    klass.new(**parameters)
+  end
 end

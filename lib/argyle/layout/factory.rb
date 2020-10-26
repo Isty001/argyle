@@ -8,9 +8,7 @@ class Argyle::Layout::Factory
   def create(klass)
     Argyle::Assert.klass(Argyle::Layout::Base, klass)
 
-    areas = klass.area_prototypes.transform_values do |prototype|
-      prototype.klass.new(prototype.parameters)
-    end
+    areas = klass.area_prototypes.transform_values(&:unwrap)
 
     windows = areas.map(&method(:create_window)).to_h
 

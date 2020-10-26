@@ -19,6 +19,8 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 Documentation:
   Enabled: false
+Naming/MethodParameterName:
+  Enabled: false
 
 # Not enabled by default
 Layout/BeginEndAlignment: # (new in 0.91)
