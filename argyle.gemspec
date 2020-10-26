@@ -1,5 +1,5 @@
 Gem::Specification.new do |spec|
-  spec.name          = 'argyle'
+  spec.name          = 'argyle.rb'
   spec.version       = '0.0.0'
   spec.authors       = ['Isty001']
   spec.email         = ['isty001@gmail.com']
