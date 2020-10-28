@@ -1,8 +1,7 @@
 class Argyle::StyleSheet::Color
-  attr_reader :id, :r, :g, :b
+  attr_reader :r, :g, :b
 
-  def initialize(id:, r:, g:, b:)
-    @id = id
+  def initialize(r:, g:, b:)
     @r = r
     @g = g
     @b = b

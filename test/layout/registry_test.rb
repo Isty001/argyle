@@ -2,10 +2,6 @@ require 'test'
 
 class LayoutRegistryTest < Minitest::Test
   class TestLayout < Argyle::Layout::Base
-    id(:test)
-  end
-
-  class TestLayoutNoId < Argyle::Layout::Base
   end
 
   def test_registry_happy_path
@@ -14,7 +10,7 @@ class LayoutRegistryTest < Minitest::Test
     original.expects(:clone).returns(clone)
 
     registry = Argyle::Layout::Registry.new
-    registry.add(original)
+    registry.add(:test, original)
 
     assert_equal(clone, registry.clone(:test))
   end
@@ -23,17 +19,17 @@ class LayoutRegistryTest < Minitest::Test
     registry = Argyle::Layout::Registry.new
 
     error = assert_raises(Argyle::Error::ArgumentError) do
-      registry.add(TestLayoutNoId.new({}, {}))
+      registry.add(nil, TestLayout.new({}, {}))
     end
 
-    assert_equal('Layout LayoutRegistryTest::TestLayoutNoId has no id', error.message)
+    assert_equal('No id given for layout: LayoutRegistryTest::TestLayout', error.message)
   end
 
   def test_add_invalid_instance
     registry = Argyle::Layout::Registry.new
 
     error = assert_raises(Argyle::Error::TypeError) do
-      registry.add(:symbol)
+      registry.add(:id, :symbol)
     end
 
     assert_equal("Layout must be an instance of #{Argyle::Layout::Base}", error.message)

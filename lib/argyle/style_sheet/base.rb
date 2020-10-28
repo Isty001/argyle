@@ -8,8 +8,8 @@ class Argyle::StyleSheet::Base
   class << self
     attr_reader :style_prototypes, :color_prototypes
 
-    def color(id, r:, g:, b:)
-      color_prototypes[id] = Argyle::Prototype.new(Argyle::StyleSheet::Color, {r: r, g: g, b: b})
+    def color(id, **opts)
+      color_prototypes[id] = Argyle::Prototype.new(Argyle::StyleSheet::Color, opts)
     end
 
     # @param id [Symbol]
@@ -19,6 +19,13 @@ class Argyle::StyleSheet::Base
     #
     def style(id, **opts)
       style_prototypes[id] = Argyle::Prototype.new(Argyle::StyleSheet::Style, opts)
+    end
+
+    def inherited(klass)
+      super
+
+      klass.instance_variable_set('@color_prototypes', color_prototypes || {})
+      klass.instance_variable_set('@style_prototypes', style_prototypes || {})
     end
   end
 end

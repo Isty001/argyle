@@ -4,9 +4,6 @@
 # @!attribute [r] layout
 #   @return [Argyle::Layout::Base]
 #
-# @!attribute [r] identifier
-#   @return [Symbol]
-#
 class Argyle::Page::Base
   attr_reader :components, :layout
 
@@ -25,21 +22,17 @@ class Argyle::Page::Base
   #   @return [Symbol]
   #
   class << self
-    attr_reader :component_prototypes, :layout_id, :identifier
+    attr_reader :component_prototypes, :layout_id
 
     private
 
     # @param id [Symbol]
-    #
-    def id(id)
-      @identifier = id
-    end
-
-    # @param id [Symbol]
     # @param value [String]
     #
-    def text(id, value)
-      component_prototypes[id] = Argyle::Prototype.new(Argyle::Component::Text, {value: value, area: @current_area})
+    def text(id, **opts)
+      opts[:area] = @current_area
+
+      component_prototypes[id] = Argyle::Prototype.new(Argyle::Component::Text, opts)
     end
 
     # @param id [Symbol]
@@ -63,7 +56,6 @@ class Argyle::Page::Base
     def inherited(klass)
       super
 
-      klass.instance_variable_set('@identifier', nil)
       klass.instance_variable_set('@current_area', :main)
 
       klass.instance_variable_set('@component_prototypes', component_prototypes || {})

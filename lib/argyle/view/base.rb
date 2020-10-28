@@ -1,8 +1,8 @@
 class Argyle::View::Base
-  # @param style_container [Argyle::StyleSheet::Container]
+  # @param style_transformer [Argyle::View::StyleTransformer]
   #
-  def initialize(style_container)
-    @style_container = style_container
+  def initialize(style_transformer)
+    @style_transformer = style_transformer
   end
 
   # @param window [Ncurses::WINDOW]
@@ -10,5 +10,11 @@ class Argyle::View::Base
   #
   def render(_window, _component)
     raise NotImplementedError.new("render method must be implemented in #{self.class}")
+  end
+
+  private
+
+  def style(window, id, &block)
+    @style_transformer.apply(window, id, &block)
   end
 end

@@ -12,3 +12,7 @@ require 'minitest/autorun'
 require 'mocha/minitest'
 
 require_relative '../lib/argyle'
+
+Argyle.activate
+
+at_exit { Argyle.deactivate }

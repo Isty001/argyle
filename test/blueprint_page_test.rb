@@ -2,20 +2,15 @@ require 'test'
 
 class BlueprintPageTest < Minitest::Test
   class TestPage1 < Argyle::Page::Base
-    id(:test_1)
   end
 
   class TestPage2 < Argyle::Page::Base
-    id(:test_2)
-  end
-
-  class TestPageNoId < Argyle::Page::Base
   end
 
   def test_add_page
     blueprint = Argyle::Blueprint.new
-    blueprint.add_page(TestPage1)
-    blueprint.add_page(TestPage2)
+    blueprint.add_page(:test_1, TestPage1)
+    blueprint.add_page(:test_2, TestPage2)
 
     pages = blueprint.pages
     assert_equal(2, pages.length)
@@ -29,10 +24,10 @@ class BlueprintPageTest < Minitest::Test
     blueprint = Argyle::Blueprint.new
 
     error = assert_raises(Argyle::Error::ArgumentError) do
-      blueprint.add_page(TestPageNoId)
+      blueprint.add_page(nil, TestPage2)
     end
 
-    assert_equal('Page BlueprintPageTest::TestPageNoId has no id', error.message)
+    assert_equal('No id given for page: BlueprintPageTest::TestPage2', error.message)
   end
 
   def test_no_current_page
@@ -52,8 +47,8 @@ class BlueprintPageTest < Minitest::Test
     end
 
     blueprint = Argyle::Blueprint.new(renderer: renderer)
-    blueprint.add_page(TestPage1)
-    blueprint.add_page(TestPage2)
+    blueprint.add_page(:test_1, TestPage1)
+    blueprint.add_page(:test_2, TestPage2)
 
     blueprint.render
   end

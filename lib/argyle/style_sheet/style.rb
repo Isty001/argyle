@@ -1,9 +1,18 @@
+# @!attribute [r] :fg
+#   @return [Symbol]
+#
+# @!attribute [r] :bg
+#   @return [Symbol]
+#
+# @!attribute [r] :attributes
+#   @return [Array<Symbol>]
+#
 class Argyle::StyleSheet::Style
-  attr_reader :id, :fg, :bg
+  attr_reader :fg, :bg, :attributes
 
-  def initialize(id:, fg: nil, bg: nil)
-    @id = id
+  def initialize(fg: nil, bg: nil, attributes: [])
     @fg = fg
     @bg = bg
+    @attributes = attributes
   end
 end

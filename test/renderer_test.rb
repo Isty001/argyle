@@ -10,21 +10,21 @@ class RendererTest < Minitest::Test
   class TestView < Argyle::View::Base
   end
 
-  def test_set_view_invalid_component
+  def test_add_view_invalid_component
     renderer = Argyle::Renderer.new(mock)
 
     error = assert_raises(Argyle::Error::TypeError) do
-      renderer.set_view(String, TestView)
+      renderer.add_view(String, TestView)
     end
 
     assert_equal("Expected subclass of #{Argyle::Component::Base.name}, String given", error.message)
   end
 
-  def test_set_view_invalid_view
+  def test_add_view_invalid_view
     renderer = Argyle::Renderer.new(mock)
 
     error = assert_raises(Argyle::Error::TypeError) do
-      renderer.set_view(TestComponent, 'some string')
+      renderer.add_view(TestComponent, 'some string')
     end
 
     assert_equal("Expected subclass of #{Argyle::View::Base}, String given", error.message)
@@ -47,7 +47,7 @@ class RendererTest < Minitest::Test
 
   def test_no_window_for_area
     renderer = Argyle::Renderer.new(mock)
-    renderer.set_view(TestComponent, TestView)
+    renderer.add_view(TestComponent, TestView)
 
     layout = mock
     layout.expects(:windows).returns({})
@@ -68,7 +68,7 @@ class RendererTest < Minitest::Test
     TestView.expects(:new).with(container).returns(view)
 
     renderer = Argyle::Renderer.new(container)
-    renderer.set_view(TestComponent, TestView)
+    renderer.add_view(TestComponent, TestView)
 
     window = mock
     window.expects(:refresh)

@@ -6,9 +6,9 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Argyle'
   spec.description   = 'Argyle'
-  spec.homepage      = 'https://github.com/argyle/argyle'
+  spec.homepage      = 'https://github.com/Isty001/argyle'
   spec.license       = 'MIT'
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.6.0')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.5.0')
 
   # spec.metadata['allowed_push_host'] = 'TODO: Set to 'http://mygemserver.com''
 

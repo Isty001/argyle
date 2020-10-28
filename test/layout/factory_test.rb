@@ -1,6 +1,6 @@
 require 'test'
 
-class LayoutRegistryTest < Minitest::Test
+class LayoutFactoryTest < Minitest::Test
   class TestLayout < Argyle::Layout::Base
     area(:header)
     area(:footer)

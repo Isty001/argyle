@@ -4,9 +4,6 @@
 # @!attribute [r] windows
 #   @return [Hash{Symbol=>Ncurses::WINDOW}]
 #
-# @!attribute [r] identifier
-#   @return [Symbol]
-#
 class Argyle::Layout::Base
   attr_reader :areas, :windows
 
@@ -22,7 +19,7 @@ class Argyle::Layout::Base
   #   @return [Hash{Symbol=>Argyle::Prototype}]
   #
   class << self
-    attr_reader :area_prototypes, :identifier
+    attr_reader :area_prototypes
 
     protected
 
@@ -33,12 +30,6 @@ class Argyle::Layout::Base
     end
 
     private
-
-    # @param id [Symbol]
-    #
-    def id(id)
-      @identifier = id
-    end
 
     def inherited(klass)
       super

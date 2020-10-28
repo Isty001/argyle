@@ -4,8 +4,8 @@ class PageFactorytest < Minitest::Test
   class NicePage < Argyle::Page::Base
     layout(:main)
 
-    text(:title, 'Hello')
-    text(:header, 'Test')
+    text(:title, value: 'Hello')
+    text(:header, value: 'Test')
   end
 
   class NoLayoutPage < Argyle::Page::Base

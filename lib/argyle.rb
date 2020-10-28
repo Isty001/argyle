@@ -16,11 +16,7 @@ module Argyle
       Ncurses.stdscr.nodelay(true)
 
       @active = true
-
-      at_exit { deactivate }
     end
-
-    private
 
     def deactivate
       return unless active?
@@ -45,6 +41,5 @@ require_relative 'argyle/renderer'
 require_relative 'argyle/component/component'
 require_relative 'argyle/page/page'
 require_relative 'argyle/layout/layout'
+require_relative 'argyle/style_sheet/style_sheet'
 require_relative 'argyle/view/view'
-
-Argyle.activate

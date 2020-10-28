@@ -1,11 +1,9 @@
 class Argyle::Renderer
-  # @param style_container [Argyle::StyleSheet::Container]
+  # @param style_transformer [Argyle::View::StyleTransformer]
   #
-  def initialize(style_container)
-    @style_container = style_container
+  def initialize(style_transformer)
+    @style_transformer = style_transformer
     @views = {}
-
-    set_view(Argyle::Component::Text, Argyle::View::Text)
   end
 
   # @param component_klass [Class<Argyle::Component::Base>]
@@ -14,11 +12,11 @@ class Argyle::Renderer
   # @raise [Argyle::Error::TypeError] If component_klass is not a subclass of Argyle::Component::Base
   # @raise [Argyle::Error::TypeError] If view_klass is not a subclass of Argyle::View::Base
   #
-  def set_view(component_klass, view_klass)
+  def add_view(component_klass, view_klass)
     Argyle::Assert.klass(Argyle::Component::Base, component_klass)
     Argyle::Assert.klass(Argyle::View::Base, view_klass)
 
-    @views[component_klass] = view_klass.new(@style_container)
+    @views[component_klass] = view_klass.new(@style_transformer)
   end
 
   # @param page [Argyle::Page::Base]
