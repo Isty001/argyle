@@ -24,9 +24,12 @@ class Argyle::Layout::Base
     protected
 
     # @param id [Symbol]
+    # @option opts [Symbol] :float
+    # @option opts [String] :width (nil) The percentage of the full width, ie.: '35%'
+    # @option opts [String] :height (nil) The percentage of the full height, ie.: '63%'
     #
-    def area(id)
-      area_prototypes[id] = Argyle::Prototype.new(Argyle::Layout::Area, {})
+    def area(id, **opts)
+      area_prototypes[id] = Argyle::Prototype.new(Argyle::Layout::Area, opts)
     end
 
     private

@@ -3,7 +3,7 @@ class Argyle::View::Text < Argyle::View::Base
   #
   def render(window, component)
     style(window, component.style) do
-      window.mvwprintw(0, 0, component.value)
+      window.mvwprintw(1, 1, component.value)
     end
   end
 end

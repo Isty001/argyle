@@ -13,20 +13,15 @@ class Argyle::Blueprint
     @pages = {}
     @current_page = nil
     @layout_factory = layout_factory || Argyle::Layout::Factory.new
-    @layout_registry = layout_registry || create_layout_registry
+    @layout_registry = layout_registry || Argyle::Layout::Registry.new
     @page_factory = page_factory || Argyle::Page::Factory.new(@layout_registry)
 
     @renderer = renderer || create_renderer
+
+    add_layout(:default, Argyle::Layout::Default)
   end
 
   private
-
-  def create_layout_registry
-    registry = Argyle::Layout::Registry.new
-    registry.add(:default, @layout_factory.create(Argyle::Layout::Default))
-
-    registry
-  end
 
   def create_renderer
     container = Argyle::StyleSheet::Container.new
@@ -42,6 +37,7 @@ class Argyle::Blueprint
 
   public
 
+  # @param id [Symbol]
   # @param page_klass [Class<Argyle::Page::Base>] Subclass of Argyle::Page::Base
   #
   def add_page(id, page_klass)
@@ -51,6 +47,13 @@ class Argyle::Blueprint
     @pages[id] = page
 
     @current_page = page if @current_page.nil?
+  end
+
+  # @param id [Symbol]
+  # @param layout_klass [Class<Argyle::Layout::Base>] Subclass of Argyle::Layout::Base
+  #
+  def add_layout(id, layout_klass)
+    @layout_registry.add(id, @layout_factory.create(layout_klass))
   end
 
   # @note Renders the current page

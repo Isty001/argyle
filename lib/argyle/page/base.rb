@@ -27,7 +27,8 @@ class Argyle::Page::Base
     private
 
     # @param id [Symbol]
-    # @param value [String]
+    # @option opts [String] :value The text to be displayed
+    # @option opts [Array<Symbol>] :style Array of Style IDs
     #
     def text(id, **opts)
       opts[:area] = @current_area
