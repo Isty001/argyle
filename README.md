@@ -1,7 +1,7 @@
 # Argyle
 
-![Tests](https://github.com/Isty001/argyle/workflows/Tests/badge.svg)
-![Rubocop](https://github.com/Isty001/argyle/workflows/Rubocop/badge.svg)
+[![Tests](https://github.com/Isty001/argyle/workflows/Tests/badge.svg)](https://github.com/Isty001/argyle/actions?query=workflow%3ATests)
+[![Rubocop](https://github.com/Isty001/argyle/workflows/Rubocop/badge.svg)](https://github.com/Isty001/argyle/actions?query=workflow%3ARubocop)
 [![codecov](https://codecov.io/gh/Isty001/argyle/branch/master/graph/badge.svg)](https://codecov.io/gh/Isty001/argyle)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cc216aebb30d483a9384514c24f26ba1)](https://www.codacy.com/gh/Isty001/argyle/dashboard)
 
