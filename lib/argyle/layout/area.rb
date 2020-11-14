@@ -7,24 +7,21 @@
 # @!attribute [r] relative_height
 #   @return [Integer]
 #
+# @!attribute [r] offset
+#   @return [Array<Symbol>]
+#
 class Argyle::Layout::Area
-  attr_reader :float, :relative_width, :relative_height
+  attr_reader :float, :relative_width, :relative_height, :relative_offsets
 
-  def initialize(float: nil, width: nil, height: nil)
+  # @param float [Array<Symbol>]
+  # @param width [Symbol]
+  # @param height [Symbol]
+  # @param offset [Array<Symbol>]
+  #
+  def initialize(float: [], width: nil, height: nil, offset: [])
     @float = float
-    @relative_width = match_size(width)
-    @relative_height = match_size(height)
-  end
-
-  private
-
-  def match_size(raw)
-    return if raw.nil?
-
-    match = raw.to_s.match(/(\d{1,2})%/)
-
-    raise Argyle::Error::ArgumentError.new("Invalid size format: #{raw}") unless match
-
-    match.captures.first.to_i
+    @relative_width = Argyle::Positioning.parse_relative_size(width)
+    @relative_height = Argyle::Positioning.parse_relative_size(height)
+    @relative_offsets = offset.to_h.transform_values { |m| Argyle::Positioning.parse_relative_size(m) }
   end
 end

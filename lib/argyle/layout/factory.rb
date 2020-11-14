@@ -25,37 +25,15 @@ class Argyle::Layout::Factory
     max_height = Ncurses.getmaxy(Ncurses.stdscr)
     max_width = Ncurses.getmaxx(Ncurses.stdscr)
 
-    width = calculate_size(area.relative_width, max_width)
-    height = calculate_size(area.relative_height, max_height)
+    width = Argyle::Positioning.convert_relative_size(area.relative_width, max_width)
+    height = Argyle::Positioning.convert_relative_size(area.relative_height, max_height)
 
-    y, x = calculate_coordinates(area.float, width, height, max_width, max_height)
+    x, y = Argyle::Positioning.float_to_coordinates(area.float, width, height, max_width, max_height)
+    x, y = Argyle::Positioning.apply_offsets(x, y, max_width, max_height, area.relative_offsets)
 
     win = Ncurses::WINDOW.new(height, width, y, x)
     win.box(0, 0)
 
     [id, win]
-  end
-
-  def calculate_size(relative_size, max_size)
-    relative_size ? (max_size * (relative_size / 100.0)).to_i : max_size
-  end
-
-  def calculate_coordinates(float, width, height, max_width, max_height)
-    y = 0
-    x = 0
-
-    float.to_a.each do |item|
-      case item
-      when :right
-        x = max_width - width
-      when :bottom
-        y = max_height - height
-      when :center
-        y = (max_height - height) / 2
-        x = (max_width - width) / 2
-      end
-    end
-
-    [y, x]
   end
 end

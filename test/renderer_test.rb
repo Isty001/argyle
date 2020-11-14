@@ -58,7 +58,7 @@ class RendererTest < Minitest::Test
       renderer.render(page)
     end
 
-    assert_equal('Window not found for area: test', error.message)
+    assert_equal('Window not found for area: test. Is the area defined in the layout?', error.message)
   end
 
   def test_add_view_class

@@ -13,7 +13,7 @@ class Argyle::View::StyleTransformer
   # @yield
   #
   def apply(window, style_ids)
-    return if style_ids.to_a.nil?
+    return if style_ids.to_a.empty?
 
     init_style_list(style_ids) unless @stlye_attr_id_map.include?(style_ids)
 

@@ -2,24 +2,28 @@ require 'test'
 
 class LayoutFactoryTest < Minitest::Test
   class TestLayout < Argyle::Layout::Base
-    area(:header)
-    area(:footer)
+    area(id: :header)
+    area(id: :footer)
   end
 
   class TestSizeLayout < Argyle::Layout::Base
     area(
-      :custom_sizes,
+      id: :custom_sizes,
       height: '57%',
       width: '33%'
     )
 
-    area(:default_sizes)
+    area(id: :default_sizes)
   end
 
   class TestFloatLayout < Argyle::Layout::Base
-    area(:top_left, float: %i[left top])
-    area(:bottom_right, float: %i[right bottom])
-    area(:center, float: %i[center])
+    area(id: :top_left, float: %i[left top])
+    area(id: :bottom_right, float: %i[right bottom])
+    area(id: :center, float: %i[center])
+  end
+
+  class TestOffsetLayout < Argyle::Layout::Base
+    area(id: :test, offset: {top: '30%', left: '55%'})
   end
 
   def test_happy_path
@@ -29,10 +33,10 @@ class LayoutFactoryTest < Minitest::Test
 
     assert_equal(3, layout.areas.length)
 
-    main = layout.areas[:main]
+    main = layout.areas[Argyle::Layout::Base::DEFAULT_AREA]
     assert_instance_of(Argyle::Layout::Area, main)
 
-    main_window = layout.windows[:main]
+    main_window = layout.windows[Argyle::Layout::Base::DEFAULT_AREA]
     assert_instance_of(Ncurses::WINDOW, main_window)
 
     header = layout.areas[:header]
@@ -57,8 +61,8 @@ class LayoutFactoryTest < Minitest::Test
     layout = factory.create(TestSizeLayout)
 
     custom = layout.windows[:custom_sizes]
-    assert_equal((max_height * 0.57).to_i, custom.getmaxy)
-    assert_equal((max_width * 0.33).to_i, custom.getmaxx)
+    assert_equal((max_height * 0.57).ceil, custom.getmaxy)
+    assert_equal((max_width * 0.33).ceil, custom.getmaxx)
 
     default = layout.windows[:default_sizes]
     assert_equal(max_height, default.getmaxy)
@@ -84,6 +88,19 @@ class LayoutFactoryTest < Minitest::Test
     top_left = layout.windows[:bottom_right]
     assert_equal(center.getmaxy - top_left.getmaxy, center.getbegy)
     assert_equal(0, center.getbegx)
+  end
+
+  def test_offset
+    factory = Argyle::Layout::Factory.new
+
+    max_height = Ncurses.getmaxy(Ncurses.stdscr)
+    max_width = Ncurses.getmaxx(Ncurses.stdscr)
+
+    layout = factory.create(TestOffsetLayout)
+
+    window = layout.windows[:test]
+    assert_equal((max_height * 0.30).ceil, window.getbegy)
+    assert_equal((max_width * 0.55).ceil, window.getbegx)
   end
 
   def test_invalid_instance

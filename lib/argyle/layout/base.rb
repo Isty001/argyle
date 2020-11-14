@@ -5,6 +5,12 @@
 #   @return [Hash{Symbol=>Ncurses::WINDOW}]
 #
 class Argyle::Layout::Base
+  # This Area will always be defined on every Layout, by default with full Window size.
+  # You can redefine the default values via {.area} in your Layout.
+  # If no Area is set for a component, then this will be used.
+  #
+  DEFAULT_AREA = :main
+
   attr_reader :areas, :windows
 
   # @param areas [Hash{Symbol=>Argyle::Layout::Area}]
@@ -21,14 +27,9 @@ class Argyle::Layout::Base
   class << self
     attr_reader :area_prototypes
 
-    protected
-
     # @param id [Symbol]
-    # @option opts [Symbol] :float
-    # @option opts [String] :width (nil) The percentage of the full width, ie.: '35%'
-    # @option opts [String] :height (nil) The percentage of the full height, ie.: '63%'
     #
-    def area(id, **opts)
+    def area(id:, **opts)
       area_prototypes[id] = Argyle::Prototype.new(Argyle::Layout::Area, opts)
     end
 
@@ -39,7 +40,7 @@ class Argyle::Layout::Base
 
       klass.instance_variable_set('@area_prototypes', area_prototypes || {})
 
-      klass.area(:main)
+      klass.area(id: DEFAULT_AREA)
     end
   end
 end

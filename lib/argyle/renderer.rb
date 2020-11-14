@@ -35,7 +35,9 @@ class Argyle::Renderer
         raise Argyle::Error::NotFound.new("View not found fo component #{component_class}")
       end
 
-      raise Argyle::Error::NotFound.new("Window not found for area: #{area}") unless windows.include?(area)
+      unless windows.include?(area)
+        raise Argyle::Error::NotFound.new("Window not found for area: #{area}. Is the area defined in the layout?")
+      end
 
       @views[component_class].render(windows[area], component)
     end

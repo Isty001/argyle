@@ -32,6 +32,7 @@ module Argyle
   end
 end
 
+require_relative 'argyle/positioning'
 require_relative 'argyle/assert'
 require_relative 'argyle/blueprint'
 require_relative 'argyle/error'

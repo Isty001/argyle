@@ -2,10 +2,10 @@ require 'test'
 
 class PageFactorytest < Minitest::Test
   class NicePage < Argyle::Page::Base
-    layout(:main)
+    layout(:test)
 
-    text(:title, value: 'Hello')
-    text(:header, value: 'Test')
+    text(id: :title, value: 'Hello')
+    text(id: :header, value: 'Test')
   end
 
   class NoLayoutPage < Argyle::Page::Base
@@ -15,7 +15,7 @@ class PageFactorytest < Minitest::Test
     layout = new_layout
 
     registry = mock
-    registry.expects(:clone).with(:main).returns(layout)
+    registry.expects(:clone).with(:test).returns(layout)
 
     factory = Argyle::Page::Factory.new(registry)
     page = factory.create(NicePage)
