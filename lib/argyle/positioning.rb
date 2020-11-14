@@ -15,7 +15,7 @@ class Argyle::Positioning
     end
 
     def convert_relative_size(relative_size, max_size)
-      relative_size ? (max_size * (relative_size / 100.0)).ceil : max_size
+      relative_size ? (max_size * (relative_size / 100.0)).floor : max_size
     end
 
     # @param float [Array<Symbol>]

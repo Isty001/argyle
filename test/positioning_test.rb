@@ -21,9 +21,9 @@ class PositioningTest < Minitest::Test
 
   def test_convert_ralative_size
     assert_equal(10, Argyle::Positioning.convert_relative_size(10, 100))
-    assert_equal((356 * 0.33).ceil, Argyle::Positioning.convert_relative_size(33, 356))
+    assert_equal((356 * 0.33).floor, Argyle::Positioning.convert_relative_size(33, 356))
     assert_equal(92, Argyle::Positioning.convert_relative_size(100, 92))
-    assert_equal((111 * 0.01).ceil, Argyle::Positioning.convert_relative_size(1, 111))
+    assert_equal((111 * 0.01).floor, Argyle::Positioning.convert_relative_size(1, 111))
   end
 
   def test_float_coordinates

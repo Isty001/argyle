@@ -2,7 +2,7 @@
 #   @return [Hash{Symbol=>Argyle::Layout::Area}]
 #
 # @!attribute [r] windows
-#   @return [Hash{Symbol=>Ncurses::WINDOW}]
+#   @return [Hash{Symbol=>Curses::WINDOW}]
 #
 class Argyle::Layout::Base
   # This Area will always be defined on every Layout, by default with full Window size.
@@ -14,7 +14,7 @@ class Argyle::Layout::Base
   attr_reader :areas, :windows
 
   # @param areas [Hash{Symbol=>Argyle::Layout::Area}]
-  # @param windows [Hash{Symbol=>Ncurses::WINDOW}] Mapped to the corresponding Area
+  # @param windows [Hash{Symbol=>Curses::WINDOW}] Mapped to the corresponding Area
   #
   def initialize(areas, windows)
     @areas = areas

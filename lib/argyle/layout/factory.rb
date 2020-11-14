@@ -19,11 +19,11 @@ class Argyle::Layout::Factory
 
   # @param area [Argyle::Layout::Area]
   #
-  # @return [Ncurses::WINDOW]
+  # @return [Curses::WINDOW]
   #
   def create_window(id, area)
-    max_height = Ncurses.getmaxy(Ncurses.stdscr)
-    max_width = Ncurses.getmaxx(Ncurses.stdscr)
+    max_width = Curses.stdscr.maxx
+    max_height = Curses.stdscr.maxy
 
     width = Argyle::Positioning.convert_relative_size(area.relative_width, max_width)
     height = Argyle::Positioning.convert_relative_size(area.relative_height, max_height)
@@ -31,7 +31,7 @@ class Argyle::Layout::Factory
     x, y = Argyle::Positioning.float_to_coordinates(area.float, width, height, max_width, max_height)
     x, y = Argyle::Positioning.apply_offsets(x, y, max_width, max_height, area.relative_offsets)
 
-    win = Ncurses::WINDOW.new(height, width, y, x)
+    win = Curses::Window.new(height, width, y, x)
     win.box(0, 0)
 
     [id, win]

@@ -1,11 +1,11 @@
 class Argyle::View::AttributeMap
   MAP = {
-    bold: Ncurses::A_BOLD,
-    standou: Ncurses::A_STANDOUT,
-    underline: Ncurses::A_UNDERLINE,
-    reverse: Ncurses::A_REVERSE,
-    blink: Ncurses::A_BLINK,
-    dim: Ncurses::A_DIM
+    bold: Curses::A_BOLD,
+    standou: Curses::A_STANDOUT,
+    underline: Curses::A_UNDERLINE,
+    reverse: Curses::A_REVERSE,
+    blink: Curses::A_BLINK,
+    dim: Curses::A_DIM
   }.freeze
   private_constant :MAP
 

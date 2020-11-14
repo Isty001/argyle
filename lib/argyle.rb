@@ -1,19 +1,18 @@
-require 'ncursesw'
+require 'curses'
 
 module Argyle
   class << self
     def activate
       return if active?
 
-      Ncurses.initscr
-      Ncurses.start_color
-      Ncurses.use_default_colors
-      Ncurses.cbreak
-      Ncurses.noecho
-      # Ncurses.curs_set(0)
-      Ncurses.stdscr.intrflush(false)
-      Ncurses.stdscr.keypad(true)
-      Ncurses.stdscr.nodelay(true)
+      Curses.init_screen
+      Curses.start_color
+      Curses.use_default_colors
+      Curses.cbreak
+      Curses.noecho
+      # Curses.curs_set(0)
+      Curses.stdscr.keypad(true)
+      Curses.stdscr.nodelay = true
 
       @active = true
     end
@@ -21,7 +20,7 @@ module Argyle
     def deactivate
       return unless active?
 
-      Ncurses.endwin
+      Curses.close_screen
 
       @active = false
     end

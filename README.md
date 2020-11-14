@@ -15,6 +15,14 @@ TODO: Delete this and the text above, and describe your gem
 
 Add this line to your application's Gemfile:
 
+Requires ncurses or ncursesw (with wide character support). On Debian based distributions, you can install it with apt:
+
+$ apt install libncurses5-dev
+
+Or
+
+$ apt install libncursesw5-dev
+
 ```ruby
 gem 'argyle'
 ```

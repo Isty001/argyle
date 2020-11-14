@@ -6,7 +6,8 @@ class Argyle::View::Text < Argyle::View::Base
 
     style(window, component.style) do
       wrap_text(component.value, width, height).each do |line|
-        window.mvwprintw(y, x, line)
+        window.setpos(y, x)
+        window.addstr(line)
         y += 1
       end
     end

@@ -5,7 +5,7 @@ class Argyle::View::Base
     @style_transformer = style_transformer
   end
 
-  # @param window [Ncurses::WINDOW]
+  # @param window [Curses::WINDOW]
   # @param component [Argyle::Component::Base]
   #
   def render(_window, _component)
@@ -30,14 +30,14 @@ class Argyle::View::Base
     lines.take(max_lines)
   end
 
-  # @param window [Ncurses::WINDOW]
+  # @param window [Curses::WINDOW]
   # @param component [Argyle::Component::Base]
   #
   # @return [Array<Integer>] Geometry values: [x, y, width, height]
   #
   def component_gemoetry(window, component)
-    max_width = window.getmaxx
-    max_height = window.getmaxy
+    max_width = window.maxx
+    max_height = window.maxy
 
     width = Argyle::Positioning.convert_relative_size(component.relative_width, max_width)
     height = Argyle::Positioning.convert_relative_size(component.relative_height, max_height)

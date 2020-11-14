@@ -8,12 +8,12 @@ class Argyle::View::StyleTransformer
     @stlye_attr_id_map = {}
   end
 
-  # @param window [Ncurses::WINDOW]
+  # @param window [Curses::WINDOW]
   # @param style_ids [Array<Symbol>]
   # @yield
   #
   def apply(window, style_ids)
-    return if style_ids.to_a.empty?
+    return if style_ids.to_a.nil?
 
     init_style_list(style_ids) unless @stlye_attr_id_map.include?(style_ids)
 
@@ -56,13 +56,13 @@ class Argyle::View::StyleTransformer
     init_color(bg) unless @color_id_map.include?(bg)
 
     pair_id = @id_sequnce += 1
-    Ncurses.init_pair(pair_id, @color_id_map[fg] || -1, @color_id_map[bg] || -1)
+    Curses.init_pair(pair_id, @color_id_map[fg] || -1, @color_id_map[bg] || -1)
 
     attr = attributes.reduce(0) do |result, built_in|
       result | Argyle::View::AttributeMap[built_in]
     end
 
-    attr | Ncurses.COLOR_PAIR(pair_id)
+    attr | Curses.color_pair(pair_id)
   end
 
   # @param color_id [Symbol]
@@ -74,7 +74,7 @@ class Argyle::View::StyleTransformer
 
     attr_id = @id_sequnce += 1
 
-    Ncurses.init_color(
+    Curses.init_color(
       attr_id,
       color.r / 0.255,
       color.g / 0.255,
