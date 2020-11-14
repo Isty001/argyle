@@ -6,24 +6,18 @@ on: [push, pull_request]
 jobs:
     # Ruby 2.7
   #
-  test-windows-ruby27:
+  test-windows-ruby26:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-#       - name: Install nCurses
-#         run: sudo apt-get install libncursesw5 libncursesw5-dev libncurses5-dev
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 2.6
       - name: Install dependencies
         run: bundle install
       - name: Run tests
         run: bundle exec rake
-#         env:
-#           GENERATE_COVERAGE: 1
-#           TERM: xterm
-
 
      
 #   # Ruby 2.7
