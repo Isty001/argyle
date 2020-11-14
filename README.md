@@ -1,7 +1,6 @@
 # Argyle
 
-![Test Ruby 2.6](https://github.com/Isty001/argyle/workflows/Test%20Ruby%202.6/badge.svg)
-![Test Ruby 2.7](https://github.com/Isty001/argyle/workflows/Test%20Ruby%202.7/badge.svg)
+![Tests](https://github.com/Isty001/argyle/workflows/Tests/badge.svg)
 ![Rubocop](https://github.com/Isty001/argyle/workflows/Rubocop/badge.svg)
 [![codecov](https://codecov.io/gh/Isty001/argyle/branch/master/graph/badge.svg)](https://codecov.io/gh/Isty001/argyle)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/cc216aebb30d483a9384514c24f26ba1)](https://www.codacy.com/gh/Isty001/argyle/dashboard)
