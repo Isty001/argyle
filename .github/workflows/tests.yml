@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: bundle install
       - name: Run tests
-        run: bundle exec rake
+        run: mintty bundle exec rake
 
      
 #   # Ruby 2.7
