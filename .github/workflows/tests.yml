@@ -3,7 +3,44 @@ name: Tests
 
 on: [push, pull_request]
 
-jobs:  
+jobs:
+  # Ruby 3.0
+  #
+  test-ubuntu-ruby30:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install nCurses
+        run: sudo apt-get install libncursesw5 libncursesw5-dev libncurses5-dev
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0-preview1
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: bundle exec rake
+        env:
+          GENERATE_COVERAGE: 1
+          TERM: xterm
+
+  test-macos-ruby30:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install nCurses
+        run: brew install ncurses
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0-preview1
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: bundle exec rake
+        env:
+          TERM: xterm
+
   # Ruby 2.7
   #
   test-ubuntu-ruby27:
@@ -46,19 +83,19 @@ jobs:
   test-ubuntu-ruby26:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Install nCurses
-      run: sudo apt-get install libncursesw5 libncursesw5-dev libncurses5-dev
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.6
-    - name: Install dependencies
-      run: bundle install
-    - name: Run tests
-      run: bundle exec rake
-      env:
-        TERM: xterm
+      - uses: actions/checkout@v2
+      - name: Install nCurses
+        run: sudo apt-get install libncursesw5 libncursesw5-dev libncurses5-dev
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: bundle exec rake
+        env:
+          TERM: xterm
 
   test-macos-ruby26:
     runs-on: macos-latest
@@ -89,7 +126,7 @@ jobs:
         run: bundle install
       - name: Run tests
         run: mintty bundle exec rake
-        
+
   # Ruby 2.5
   #
   test-ubuntu-ruby25:
