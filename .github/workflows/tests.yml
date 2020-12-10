@@ -15,7 +15,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0.0-preview1
+          ruby-version: 3.0.0-preview2
       - name: Install dependencies
         run: bundle install
       - name: Run tests
@@ -33,7 +33,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0.0-preview1
+          ruby-version: 3.0.0-preview2
       - name: Install dependencies
         run: bundle install
       - name: Run tests
@@ -77,7 +77,20 @@ jobs:
         run: bundle exec rake
         env:
           TERM: xterm
-
+  
+  test-windows-ruby27:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: mintty bundle exec rake
+        
   # Ruby 2.6
   #
   test-ubuntu-ruby26:
