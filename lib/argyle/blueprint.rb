@@ -8,31 +8,33 @@ class Argyle::Blueprint
   # @param layout_registry [Argyle::Layout::Registry]
   # @param page_factory [Argyle::Page::Factory]
   # @param renderer [Argyle::Renderer]
+  # @param style_container [Argyle::StyleSheet::Container]
   #
-  def initialize(layout_factory: nil, layout_registry: nil, page_factory: nil, renderer: nil)
+  def initialize(layout_factory: nil, layout_registry: nil, page_factory: nil, renderer: nil, style_container: nil)
     @pages = {}
     @current_page = nil
     @layout_factory = layout_factory || Argyle::Layout::Factory.new
     @layout_registry = layout_registry || Argyle::Layout::Registry.new
     @page_factory = page_factory || Argyle::Page::Factory.new(@layout_registry)
 
+    @style_container = style_container || Argyle::StyleSheet::Container.new
     @renderer = renderer || create_renderer
 
     add_layout(:default, Argyle::Layout::Default)
+    add_style_sheet(Argyle::StyleSheet::Default)
+
+    add_view(Argyle::Component::Text, Argyle::View::Text)
+    add_view(Argyle::Component::Menu, Argyle::View::Menu)
+
+    at_exit { Argyle::Publisher.instance.publish(:exit) }
   end
 
   private
 
   def create_renderer
-    container = Argyle::StyleSheet::Container.new
-    container.add(Argyle::StyleSheet::Default)
+    style_transformer = Argyle::View::StyleTransformer.new(@style_container)
 
-    style_transformer = Argyle::View::StyleTransformer.new(container)
-
-    renderer = Argyle::Renderer.new(style_transformer)
-    renderer.add_view(Argyle::Component::Text, Argyle::View::Text)
-
-    renderer
+    Argyle::Renderer.new(style_transformer)
   end
 
   public
@@ -54,6 +56,19 @@ class Argyle::Blueprint
   #
   def add_layout(id, layout_klass)
     @layout_registry.add(id, @layout_factory.create(layout_klass))
+  end
+
+  # @param sheet_klass [Class<Argyle::StyleSheet::Base>]
+  #
+  def add_style_sheet(sheet_klass)
+    @style_container.add(sheet_klass)
+  end
+
+  # @param component_klass [Class<Argyle::Component::Base>]
+  # @param view_klass [Class<Argyle::View::Base>]
+  #
+  def add_view(component_klass, view_klass)
+    @renderer.add_view(component_klass, view_klass)
   end
 
   # @note Renders the current page

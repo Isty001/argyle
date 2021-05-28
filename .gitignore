@@ -10,3 +10,4 @@
 sandbox/
 .yardoc/
 Gemfile.lock
+.ccls-cache

@@ -33,14 +33,36 @@ class Argyle::Page::Base
     # @!group Adding Components
     #
     # @param id [Symbol]
-    # @param (see Argyle::Component::Base#initialize)
+    # @param (see Argyle::Component::Text#initialize)
     #
     # @see Argyle::Component::Text
     #
-    def text(id:, **opts)
-      opts[:area] = @current_area
+    def text(id:, **args)
+      args[:area] = @current_area
 
-      component_prototypes[id] = Argyle::Prototype.new(Argyle::Component::Text, opts)
+      component_prototypes[id] = Argyle::Prototype.new(Argyle::Component::Text, args)
+    end
+
+    # @param id [Symbol]
+    # @param (see Argyle::Component::Menu#initialize)
+    #
+    # @see Argyle::Component::Menu
+    #
+    def menu(id:, **args)
+      args[:area] = @current_area
+
+      component_prototypes[id] = Argyle::Prototype.new(Argyle::Component::Menu, args)
+    end
+
+    # @param id [Symbol]
+    # @param (see Argyle::Component::Menu#initialize)
+    #
+    # @see Argyle::Component::MenuItem
+    #
+    # MenuItems cannot be added directly to the Page. Can only be used inside menu.items
+    #
+    def menu_item(**args)
+      Argyle::Prototype.new(Argyle::Component::MenuItem, args)
     end
 
     # @!endgroup

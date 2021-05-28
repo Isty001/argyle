@@ -10,4 +10,7 @@ module Argyle::Error
 
   class NotFound < RuntimeError
   end
+
+  class NoMethodError < NoMethodError
+  end
 end

@@ -1,7 +1,9 @@
 class Argyle::View::Text < Argyle::View::Base
+  # @param window [Curses::Window]
   # @param component [Argyle::Component::Text]
+  # @param _ [Argyle::Component::Context]
   #
-  def render(window, component)
+  def render(window, component, _)
     x, y, width, height = component_gemoetry(window, component)
 
     style(window, component.style) do

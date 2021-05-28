@@ -1,8 +1,9 @@
 class Argyle::Renderer
   # @param style_transformer [Argyle::View::StyleTransformer]
   #
-  def initialize(style_transformer)
+  def initialize(style_transformer, input_reader: nil)
     @style_transformer = style_transformer
+    @input_reader = input_reader || Argyle::Input::Reader.new
     @views = {}
   end
 
@@ -39,7 +40,11 @@ class Argyle::Renderer
         raise Argyle::Error::NotFound.new("Window not found for area: #{area}. Is the area defined in the layout?")
       end
 
-      @views[component_class].render(windows[area], component)
+      ctx = Argyle::View::Context.new(
+        @input_reader.read
+      )
+
+      @views[component_class].render(windows[area], component, ctx)
     end
 
     windows.each_value(&:refresh)

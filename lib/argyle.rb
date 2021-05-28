@@ -32,12 +32,15 @@ module Argyle
 end
 
 require_relative 'argyle/positioning'
+require_relative 'argyle/publisher'
+require_relative 'argyle/subscriber'
 require_relative 'argyle/assert'
 require_relative 'argyle/blueprint'
 require_relative 'argyle/error'
 require_relative 'argyle/prototype'
 require_relative 'argyle/renderer'
 
+require_relative 'argyle/input/input'
 require_relative 'argyle/component/component'
 require_relative 'argyle/page/page'
 require_relative 'argyle/layout/layout'

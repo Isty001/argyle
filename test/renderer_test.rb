@@ -61,13 +61,17 @@ class RendererTest < Minitest::Test
     assert_equal('Window not found for area: test. Is the area defined in the layout?', error.message)
   end
 
-  def test_add_view_class
+  def test_happy_path
     container = mock
 
     view = mock
     TestView.expects(:new).with(container).returns(view)
 
-    renderer = Argyle::Renderer.new(container)
+    inputs = [10, 932]
+    reader = mock
+    reader.expects(:read).returns(input)
+
+    renderer = Argyle::Renderer.new(container, input_reader: reader)
     renderer.add_view(TestComponent, TestView)
 
     window = mock
@@ -78,8 +82,11 @@ class RendererTest < Minitest::Test
 
     component = TestComponent.new
 
+    ctx = Argyle::View::Context.new(inputs)
+    Argyle::View::Context.expects(:new).with(inputs).returns(ctx)
+
     page = new_page(layout, {test: component})
-    view.expects(:render).with(window, component)
+    view.expects(:render).with(window, component, ctx)
 
     renderer.render(page)
   end
