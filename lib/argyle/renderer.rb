@@ -26,27 +26,40 @@ class Argyle::Renderer
   # @raise [Argyle::Error::NotFound] If the layout has no associated window for the a component's area
   #
   def render(page)
+    ctx = new_context
     windows = page.layout.windows
 
     page.components.each_value do |component|
-      component_class = component.class
+      component_klass = component.class
       area = component.area
 
-      unless @views.include?(component_class)
-        raise Argyle::Error::NotFound.new("View not found fo component #{component_class}")
-      end
-
-      unless windows.include?(area)
-        raise Argyle::Error::NotFound.new("Window not found for area: #{area}. Is the area defined in the layout?")
-      end
-
-      ctx = Argyle::View::Context.new(
-        @input_reader.read
+      view_for(component_klass).render(
+        window_for(area, windows),
+        component,
+        ctx
       )
-
-      @views[component_class].render(windows[area], component, ctx)
     end
 
     windows.each_value(&:refresh)
+  end
+
+  private
+
+  def new_context
+    Argyle::View::Context.new(
+      @input_reader.read
+    )
+  end
+
+  def view_for(component_klass)
+    return @views[component_klass] if @views.include?(component_klass)
+
+    raise Argyle::Error::NotFound.new("View not found fo component #{component_klass}")
+  end
+
+  def window_for(area, windows)
+    return windows[area] if windows.include?(area)
+
+    raise Argyle::Error::NotFound.new("Window not found for area: #{area}. Is the area defined in the layout?")
   end
 end

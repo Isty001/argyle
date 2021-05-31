@@ -42,9 +42,8 @@ class Argyle::View::Menu < Argyle::View::Base
   # @param component [Argyle::Component::Menu]
   # @param ctx [Argyle::Component::Context]
   #
-  def control(component, ctx)
+  def control(_component, ctx)
     ctx.inputs.each do |input|
-
     end
   end
 end

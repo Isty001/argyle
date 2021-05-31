@@ -9,15 +9,15 @@ class BlueprintPageTest < Minitest::Test
 
   def test_add_page
     blueprint = Argyle::Blueprint.new
-    blueprint.add_page(:test_1, TestPage1)
-    blueprint.add_page(:test_2, TestPage2)
+    blueprint.add_page(:test1, TestPage1)
+    blueprint.add_page(:test2, TestPage2)
 
     pages = blueprint.pages
     assert_equal(2, pages.length)
-    assert_equal(%i[test_1 test_2], pages.keys)
+    assert_equal(%i[test1 test2], pages.keys)
 
-    assert_equal(TestPage1, pages[:test_1].class)
-    assert_equal(TestPage2, pages[:test_2].class)
+    assert_equal(TestPage1, pages[:test1].class)
+    assert_equal(TestPage2, pages[:test2].class)
   end
 
   def test_add_page_no_id
@@ -46,9 +46,11 @@ class BlueprintPageTest < Minitest::Test
       page.is_a?(TestPage1)
     end
 
+    renderer.expects(:add_view).times(2)
+
     blueprint = Argyle::Blueprint.new(renderer: renderer)
-    blueprint.add_page(:test_1, TestPage1)
-    blueprint.add_page(:test_2, TestPage2)
+    blueprint.add_page(:test1, TestPage1)
+    blueprint.add_page(:test2, TestPage2)
 
     blueprint.render
   end

@@ -68,11 +68,7 @@ class RendererTest < Minitest::Test
     TestView.expects(:new).with(container).returns(view)
 
     inputs = [10, 932]
-    reader = mock
-    reader.expects(:read).returns(input)
-
-    renderer = Argyle::Renderer.new(container, input_reader: reader)
-    renderer.add_view(TestComponent, TestView)
+    renderer = create_happy_renderer(inputs, container)
 
     window = mock
     window.expects(:refresh)
@@ -92,6 +88,16 @@ class RendererTest < Minitest::Test
   end
 
   private
+
+  def create_happy_renderer(inputs, container)
+    reader = mock
+    reader.expects(:read).returns(inputs)
+
+    renderer = Argyle::Renderer.new(container, input_reader: reader)
+    renderer.add_view(TestComponent, TestView)
+
+    renderer
+  end
 
   def new_page(layout, components)
     page = mock
