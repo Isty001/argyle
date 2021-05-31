@@ -41,6 +41,19 @@ jobs:
         env:
           TERM: xterm
 
+  test-windows-ruby30:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: mintty bundle exec rake
+
   # Ruby 2.7
   #
   test-ubuntu-ruby27:
