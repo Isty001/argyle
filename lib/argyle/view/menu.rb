@@ -40,10 +40,19 @@ class Argyle::View::Menu < Argyle::View::Base
   end
 
   # @param component [Argyle::Component::Menu]
-  # @param ctx [Argyle::Component::Context]
+  # @param ctx [Argyle::View::Context]
   #
-  def control(_component, ctx)
-    ctx.inputs.each do |input|
+  def control(component, ctx)
+    @keymap.convert(ctx.inputs, component) do |input|
+      case input
+      when :up
+        component.menu.driver(Curses::REQ_UP_ITEM)
+      when :down
+        component.menu.driver(Curses::REQ_DOWN_ITEM)
+      end
+      rescue Curses::RequestDeniedError
     end
+
+    component.window.refresh
   end
 end

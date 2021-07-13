@@ -1,8 +1,10 @@
 class Argyle::View::Base
   # @param style_transformer [Argyle::View::StyleTransformer]
+  # @param keymap [Argyle::Input::Keymap]
   #
-  def initialize(style_transformer)
+  def initialize(style_transformer, keymap)
     @style_transformer = style_transformer
+    @keymap = keymap
   end
 
   # @param window [Curses::WINDOW]

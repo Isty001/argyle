@@ -59,7 +59,7 @@ class Argyle::Page::Base
     #
     # @see Argyle::Component::MenuItem
     #
-    # MenuItems cannot be added directly to the Page. Can only be used inside menu.items
+    # @note MenuItems cannot be added directly to the Page. Can only be used inside a menu.
     #
     def menu_item(**args)
       Argyle::Prototype.new(Argyle::Component::MenuItem, args)

@@ -39,6 +39,10 @@ class Argyle::Component::Base
     Argyle::Publisher.instance.subscribe(self)
   end
 
+  def in_focus?
+    true
+  end
+
   def subscriptions
     {}
   end

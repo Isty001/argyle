@@ -71,9 +71,11 @@ class Argyle::Blueprint
     @renderer.add_view(component_klass, view_klass)
   end
 
-  # @note Renders the current page
+  # Renders the current page
   #
   def render
+    Argyle.activate
+
     raise Argyle::Error::NotFound.new('No pages defined yet') if @pages.empty?
 
     @renderer.render(@current_page)

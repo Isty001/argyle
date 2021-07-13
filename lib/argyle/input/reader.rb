@@ -8,6 +8,6 @@ class Argyle::Input::Reader
       queue.push(input)
     end
 
-    queue.freeze
+    queue
   end
 end

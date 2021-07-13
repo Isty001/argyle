@@ -1,9 +1,12 @@
 class Argyle::Renderer
   # @param style_transformer [Argyle::View::StyleTransformer]
+  # @param input_reader [Argyle::Input::Reader]
+  # @param keymap [Argyle::Input::Keymap]
   #
-  def initialize(style_transformer, input_reader: nil)
+  def initialize(style_transformer, input_reader: nil, keymap: nil)
     @style_transformer = style_transformer
     @input_reader = input_reader || Argyle::Input::Reader.new
+    @keymap = keymap || Argyle::Input::Keymap.new
     @views = {}
   end
 
@@ -17,7 +20,7 @@ class Argyle::Renderer
     Argyle::Assert.klass(Argyle::Component::Base, component_klass)
     Argyle::Assert.klass(Argyle::View::Base, view_klass)
 
-    @views[component_klass] = view_klass.new(@style_transformer)
+    @views[component_klass] = view_klass.new(@style_transformer, @keymap)
   end
 
   # @param page [Argyle::Page::Base]
