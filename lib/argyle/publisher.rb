@@ -38,8 +38,14 @@ class Argyle::Publisher
     end
   end
 
+  # @param source [#subscriptions] (see Argyle::Publisher.source)
+  #
   def unsubscribe(source)
-    # TODO
+    @subscriptions.reject! do |_, event_subscriptions|
+      event_subscriptions.reject! do |subscripton|
+        source == subscripton[:source]
+      end
+    end
   end
 
   private
