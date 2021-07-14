@@ -29,6 +29,8 @@ Documentation:
   Enabled: false
 Naming/MethodParameterName:
   Enabled: false
+Lint/SuppressedException:
+  Enabled: false
 
 # Not enabled by default
 
