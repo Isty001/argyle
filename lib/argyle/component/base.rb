@@ -39,11 +39,40 @@ class Argyle::Component::Base
     Argyle::Publisher.instance.subscribe(self)
   end
 
+  # @param window [Curses::Window]
+  #
+  def fire_up(window)
+    @window = window
+  end
+
+  # @return [Boolean]
+  #
+  def fired_up?
+    @window.nil? == false
+  end
+
+  # @return [Curses::Window]
+  #
+  def window
+    raise RuntimeError.new("Component in not fired up") unless fired_up?
+
+    @window
+  end
+
   def in_focus?
     true
   end
 
+  def delete
+    @window.close
+    @window = nil
+
+    Argyle::Publisher.instance.unsubscribe(self)
+  end
+
   def subscriptions
-    {}
+    {
+      exit: :delete
+    }
   end
 end
