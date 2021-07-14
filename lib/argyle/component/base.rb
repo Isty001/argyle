@@ -54,7 +54,7 @@ class Argyle::Component::Base
   # @return [Curses::Window]
   #
   def window
-    raise RuntimeError.new("Component in not fired up") unless fired_up?
+    raise 'Component in not fired up' unless fired_up?
 
     @window
   end

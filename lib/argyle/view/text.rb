@@ -4,7 +4,6 @@ class Argyle::View::Text < Argyle::View::Base
   # @param _ [Argyle::Component::Context]
   #
   def render(window, component, _)
-
     unless component.fired_up?
       x, y, width, height = component_gemoetry(window, component)
 

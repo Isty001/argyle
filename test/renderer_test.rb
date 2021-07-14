@@ -31,7 +31,7 @@ class RendererTest < Minitest::Test
   end
 
   def test_no_view_for_component
-    renderer = Argyle::Renderer.new(mock)
+    renderer = create_renderer(mock, [])
 
     layout = mock
     layout.expects(:windows).returns({test: mock})
@@ -46,7 +46,7 @@ class RendererTest < Minitest::Test
   end
 
   def test_no_window_for_area
-    renderer = Argyle::Renderer.new(mock)
+    renderer = create_renderer(mock, [])
     renderer.add_view(TestComponent, TestView)
 
     layout = mock
@@ -63,18 +63,18 @@ class RendererTest < Minitest::Test
 
   def test_happy_path
     container = mock
+    keymap = mock
 
     view = mock
-    TestView.expects(:new).with(container).returns(view)
+    TestView.expects(:new).with(container, keymap).returns(view)
 
     inputs = [10, 932]
-    renderer = create_happy_renderer(inputs, container)
+    renderer = create_happy_renderer(inputs, container, keymap)
 
-    window = mock
-    window.expects(:refresh)
+    windows = mock_windows
 
     layout = mock
-    layout.expects(:windows).returns({test: window})
+    layout.expects(:windows).returns(windows)
 
     component = TestComponent.new
 
@@ -82,18 +82,37 @@ class RendererTest < Minitest::Test
     Argyle::View::Context.expects(:new).with(inputs).returns(ctx)
 
     page = new_page(layout, {test: component})
-    view.expects(:render).with(window, component, ctx)
+    view.expects(:render).with(windows[:test], component, ctx)
 
     renderer.render(page)
   end
 
   private
 
-  def create_happy_renderer(inputs, container)
+  def mock_windows
+    window = mock
+    window.expects(:touched?).returns(true)
+    window.expects(:refresh)
+
+    untouched_window = mock
+    untouched_window.expects(:touched?).returns(false)
+
+    {unused: untouched_window, test: window}
+  end
+
+  def create_renderer(inputs, container)
     reader = mock
     reader.expects(:read).returns(inputs)
 
-    renderer = Argyle::Renderer.new(container, input_reader: reader)
+    Argyle::Renderer.new(container, input_reader: reader)
+  end
+
+  def create_happy_renderer(inputs, container, keymap)
+    reader = mock
+    reader.expects(:read).returns(inputs)
+    reader.expects(:flush)
+
+    renderer = Argyle::Renderer.new(container, input_reader: reader, keymap: keymap)
     renderer.add_view(TestComponent, TestView)
 
     renderer
