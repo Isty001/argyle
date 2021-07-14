@@ -7,10 +7,11 @@ class Argyle::View::Base
     @keymap = keymap
   end
 
-  # @param window [Curses::WINDOW]
-  # @param component [Argyle::Component::Base]
+  # @param _window [Curses::WINDOW]
+  # @param _component [Argyle::Component::Base]
+  # @param _context [Argyle::View::Context]
   #
-  def render(_window, _component)
+  def render(_window, _component, _context)
     raise NotImplementedError.new("render method must be implemented in #{self.class}")
   end
 

@@ -7,17 +7,14 @@ class Argyle::Input::Keymap
         Curses::KEY_UP => :up,
         Curses::KEY_DOWN => :down,
         Curses::KEY_RIGHT => :right,
-        Curses::KEY_LEFT => :left
+        Curses::KEY_LEFT => :left,
+        Curses::KEY_MOUSE => :mouse
       }
     }
   end
 
   # @param inputs [Array<Integer>]
   # @param component [Argyle::Component::Base]
-  #
-  # @return [Symbol]
-  #
-  # @note This will modify the input list, and remove the namespace specific inputs
   #
   def convert(inputs, component)
     return unless component.in_focus?

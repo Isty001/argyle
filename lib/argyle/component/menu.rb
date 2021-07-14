@@ -14,7 +14,7 @@
 #   @return [Curses::Window, nil]
 #
 class Argyle::Component::Menu < Argyle::Component::Base
-  attr_reader :items, :cols, :rows, :menu, :window
+  attr_reader :items, :cols, :rows, :menu
 
   # @param items [Array<Argyle::Prototype>]
   # @param cols [Integer]
@@ -32,35 +32,22 @@ class Argyle::Component::Menu < Argyle::Component::Base
     @window = nil
   end
 
-  # @param menu [Curses::Menu]
   # @param window [Curses::Window]
+  # @param menu [Curses::Menu]
   #
-  def fire_up(menu, window)
+  def fire_up(window, menu)
+    super(window)
+
     @menu = menu
-    @window = window
-  end
-
-  # @return [Boolean]
-  #
-  def fired_up?
-    @window.nil? == false
-  end
-
-  def subscriptions
-    super.merge(
-      {
-        exit: :cleanup
-      }
-    )
   end
 
   private
 
-  def cleanup(_params)
+  def delete
+    super
+
     return unless fired_up?
 
     @menu.unpost
-    @window.close
-    @window = nil
   end
 end

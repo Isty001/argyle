@@ -10,4 +10,8 @@ class Argyle::Input::Reader
 
     queue
   end
+
+  def flush
+    Curses.flushinp
+  end
 end

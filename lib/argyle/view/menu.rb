@@ -25,7 +25,7 @@ class Argyle::View::Menu < Argyle::View::Base
     menu = create_menu(items, menu_window, component)
     menu_window.refresh
 
-    component.fire_up(menu, menu_window)
+    component.fire_up(menu_window, menu)
   end
 
   # @param items [Array<Curses::Item>]
@@ -46,13 +46,15 @@ class Argyle::View::Menu < Argyle::View::Base
     @keymap.convert(ctx.inputs, component) do |input|
       case input
       when :up
-        component.menu.driver(Curses::REQ_UP_ITEM)
+        component.menu.up_item
       when :down
-        component.menu.driver(Curses::REQ_DOWN_ITEM)
+        component.menu.down_item
+      when :mouse
+        component.menu.driver(Curses::KEY_MOUSE)
       end
-      rescue Curses::RequestDeniedError
+    rescue Curses::RequestDeniedError, Curses::UnknownCommandError
     end
 
-    component.window.refresh
+    component.window.refresh if component.window.touched?
   end
 end

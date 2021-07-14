@@ -43,7 +43,11 @@ class Argyle::Renderer
       )
     end
 
-    windows.each_value(&:refresh)
+    windows.each_value do |window|
+      window.refresh if window.touched?
+    end
+
+    @input_reader.flush
   end
 
   private

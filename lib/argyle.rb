@@ -9,10 +9,12 @@ module Argyle
       Curses.start_color
       Curses.use_default_colors
       Curses.cbreak
+      Curses.crmode
       Curses.noecho
-      # Curses.curs_set(0)
+      Curses.curs_set(0)
       Curses.stdscr.keypad(true)
       Curses.stdscr.nodelay = true
+      Curses.mousemask(Curses::ALL_MOUSE_EVENTS)
 
       @active = true
     end

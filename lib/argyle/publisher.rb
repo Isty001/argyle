@@ -38,6 +38,10 @@ class Argyle::Publisher
     end
   end
 
+  def unsubscribe(source)
+    # TODO
+  end
+
   private
 
   def callable_from(source, subscriber, event)
