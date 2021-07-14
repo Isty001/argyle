@@ -10,9 +10,9 @@ class Argyle::Publisher
   # @param event [Symbol]
   # @param params
   #
-  def publish(event, params = nil)
+  def publish(event, *params)
     @subscriptions.fetch(event, {}).each do |subsription|
-      subsription[:callable].call(params)
+      subsription[:callable].call(*params)
     end
   end
 

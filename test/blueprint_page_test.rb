@@ -33,6 +33,8 @@ class BlueprintPageTest < Minitest::Test
   def test_no_current_page
     blueprint = Argyle::Blueprint.new
 
+    Argyle.expects(:activate)
+
     error = assert_raises(Argyle::Error::NotFound) do
       blueprint.render
     end
@@ -47,6 +49,8 @@ class BlueprintPageTest < Minitest::Test
     end
 
     renderer.expects(:add_view).times(2)
+
+    Argyle.expects(:activate)
 
     blueprint = Argyle::Blueprint.new(renderer: renderer)
     blueprint.add_page(:test1, TestPage1)

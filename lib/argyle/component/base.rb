@@ -64,8 +64,10 @@ class Argyle::Component::Base
   end
 
   def delete
-    @window.close
-    @window = nil
+    if fired_up?
+      @window.close
+      @window = nil
+    end
 
     Argyle::Publisher.instance.unsubscribe(self)
   end

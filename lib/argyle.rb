@@ -17,6 +17,7 @@ module Argyle
       Curses.mousemask(Curses::ALL_MOUSE_EVENTS)
 
       @active = true
+      puts(@active)
     end
 
     def deactivate
