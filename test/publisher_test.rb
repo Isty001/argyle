@@ -67,4 +67,17 @@ or must respond to #call .Event: test_event Source: PublisherTest::TestSubscribe
 
     assert_equal(expected, error.message)
   end
+
+  def test_unsubscribe
+    publisher = Argyle::Publisher.instance
+
+    params = [:some_args]
+
+    subscriber = TestSubscriber.new
+
+    publisher.subscribe(subscriber)
+    publisher.unsubscribe(subscriber)
+
+    publisher.publish(:test_method, params)
+  end
 end
