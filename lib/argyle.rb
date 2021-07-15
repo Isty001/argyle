@@ -14,7 +14,8 @@ module Argyle
       Curses.curs_set(0)
       Curses.stdscr.keypad(true)
       Curses.stdscr.nodelay = true
-      Curses.mousemask(Curses::ALL_MOUSE_EVENTS)
+      Curses.stdscr.scrollok(true)
+      # Curses.mousemask(Curses::ALL_MOUSE_EVENTS)
 
       @active = true
       puts(@active)

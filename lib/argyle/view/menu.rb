@@ -49,8 +49,6 @@ class Argyle::View::Menu < Argyle::View::Base
         component.menu.up_item
       when :down
         component.menu.down_item
-      when :mouse
-        component.menu.driver(Curses::KEY_MOUSE)
       end
     rescue Curses::RequestDeniedError, Curses::UnknownCommandError
     end
