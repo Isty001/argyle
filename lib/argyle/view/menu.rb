@@ -43,6 +43,8 @@ class Argyle::View::Menu < Argyle::View::Base
   # @param ctx [Argyle::View::Context]
   #
   def control(component, ctx)
+    return unless ctx.focused?
+
     @keymap.convert(ctx.inputs, component) do |input|
       case input
       when :up

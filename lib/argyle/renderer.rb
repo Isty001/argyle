@@ -29,17 +29,16 @@ class Argyle::Renderer
   # @raise [Argyle::Error::NotFound] If the layout has no associated window for the a component's area
   #
   def render(page)
-    ctx = new_context
     windows = page.layout.windows
 
-    page.components.each_value do |component|
+    page.components.each do |component_id, component|
       component_klass = component.class
       area = component.area
 
       view_for(component_klass).render(
         window_for(area, windows),
         component,
-        ctx
+        new_context(page, component_id)
       )
     end
 
@@ -52,9 +51,13 @@ class Argyle::Renderer
 
   private
 
-  def new_context
+  # @param page [Argyle::Page]
+  # @param component_id [Symbol]
+  #
+  def new_context(page, component_id)
     Argyle::View::Context.new(
-      @input_reader.read
+      @input_reader.read,
+      page.focused_component_id == component_id
     )
   end
 

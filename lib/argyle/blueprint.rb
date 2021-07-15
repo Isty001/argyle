@@ -12,7 +12,6 @@ class Argyle::Blueprint
   #
   def initialize(layout_factory: nil, layout_registry: nil, page_factory: nil, renderer: nil, style_container: nil)
     @pages = {}
-    @current_page = nil
     @layout_factory = layout_factory || Argyle::Layout::Factory.new
     @layout_registry = layout_registry || Argyle::Layout::Registry.new
     @page_factory = page_factory || Argyle::Page::Factory.new(@layout_registry)
@@ -20,13 +19,18 @@ class Argyle::Blueprint
     @style_container = style_container || Argyle::StyleSheet::Container.new
     @renderer = renderer || create_renderer
 
+    publisher = Argyle::Publisher.instance
+    publisher.subscribe(self)
+
+    @env = Argyle::Environment.new(publisher)
+
     add_layout(:default, Argyle::Layout::Default)
     add_style_sheet(Argyle::StyleSheet::Default)
 
     add_view(Argyle::Component::Text, Argyle::View::Text)
     add_view(Argyle::Component::Menu, Argyle::View::Menu)
 
-    at_exit { Argyle::Publisher.instance.publish(:exit) }
+    at_exit { publisher.publish(:exit) }
   end
 
   private
@@ -47,8 +51,6 @@ class Argyle::Blueprint
 
     page = @page_factory.create(page_klass)
     @pages[id] = page
-
-    @current_page = page if @current_page.nil?
   end
 
   # @param id [Symbol]
@@ -76,8 +78,35 @@ class Argyle::Blueprint
   def render
     Argyle.activate
 
+    @renderer.render(current_page)
+  end
+
+  private
+
+  # @return [Argyle::Page]
+  #
+  def current_page
     raise Argyle::Error::NotFound.new('No pages defined yet') if @pages.empty?
 
-    @renderer.render(@current_page)
+    @current_page ||= pages.values.first
+  end
+
+  public
+
+  # @param id [Symbol]
+  #
+  # @note This should be only invoked externally when setting the default Page
+  #
+  def current_page=(id)
+    raise ArgumentError.new("Unknow Page: #{id}") unless @pages.include?(id)
+
+    @current_page = @pages[id]
+  end
+
+  def subscriptions
+    {
+      page_open: :current_page=,
+      component_focus: proc { |id| current_page.focus(id) }
+    }
   end
 end

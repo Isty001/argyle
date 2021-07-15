@@ -35,6 +35,7 @@ module Argyle
   end
 end
 
+require_relative 'argyle/environment'
 require_relative 'argyle/positioning'
 require_relative 'argyle/publisher'
 require_relative 'argyle/subscriber'

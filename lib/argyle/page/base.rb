@@ -4,16 +4,24 @@
 # @!attribute [r] layout
 #   @return [Argyle::Layout::Base]
 #
+# @!attribute [r] focused_component_id
+#   @return [Symbol]
+#
 # @note A Page instance will hold the actual initialized Component instances which are unique to the given Page instance
 #
 # @see Argyle::Page::Factory
 #
 class Argyle::Page::Base
-  attr_reader :components, :layout
+  attr_reader :components, :layout, :focused_component_id
 
   def initialize(components, layout)
     @components = components
     @layout = layout
+    @focused_component_id = @components.keys.first
+  end
+
+  def focus(id)
+    @focused_component_id = id
   end
 
   # @!attribute [r] component_prototypes
