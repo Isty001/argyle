@@ -30,6 +30,7 @@ class Argyle::Renderer
   #
   def render(page)
     windows = page.layout.windows
+    inputs = @input_reader.read
 
     page.components.each do |component_id, component|
       component_klass = component.class
@@ -38,7 +39,7 @@ class Argyle::Renderer
       view_for(component_klass).render(
         window_for(area, windows),
         component,
-        new_context(page, component_id)
+        new_context(inputs, page, component_id)
       )
     end
 
@@ -51,12 +52,13 @@ class Argyle::Renderer
 
   private
 
+  # @param inputs [Array<Integer>]
   # @param page [Argyle::Page]
   # @param component_id [Symbol]
   #
-  def new_context(page, component_id)
+  def new_context(inputs, page, component_id)
     Argyle::View::Context.new(
-      @input_reader.read,
+      inputs,
       page.focused_component_id == component_id
     )
   end

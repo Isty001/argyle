@@ -78,10 +78,12 @@ class RendererTest < Minitest::Test
 
     component = TestComponent.new
 
-    ctx = Argyle::View::Context.new(inputs)
-    Argyle::View::Context.expects(:new).with(inputs).returns(ctx)
+    ctx = Argyle::View::Context.new(inputs, true)
+    Argyle::View::Context.expects(:new).with(inputs, true).returns(ctx)
 
     page = new_page(layout, {test: component})
+    page.expects(:focused_component_id).returns(:test)
+
     view.expects(:render).with(windows[:test], component, ctx)
 
     renderer.render(page)
