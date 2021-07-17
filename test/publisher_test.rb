@@ -1,4 +1,4 @@
-require 'test'
+require_relative 'test'
 
 class PublisherTest < Minitest::Test
   class TestSubscriber

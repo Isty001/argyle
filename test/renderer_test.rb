@@ -1,4 +1,4 @@
-require 'test'
+require_relative 'test'
 
 class RendererTest < Minitest::Test
   class TestComponent < Argyle::Component::Base

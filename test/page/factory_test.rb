@@ -1,4 +1,4 @@
-require 'test'
+require_relative '../test'
 
 class PageFactorytest < Minitest::Test
   class NicePage < Argyle::Page::Base

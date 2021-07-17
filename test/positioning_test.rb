@@ -1,4 +1,4 @@
-require 'test'
+require_relative 'test'
 
 class PositioningTest < Minitest::Test
   def test_valid_realtive_size_format

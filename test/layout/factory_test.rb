@@ -1,4 +1,4 @@
-require 'test'
+require_relative '../test'
 
 class LayoutFactoryTest < Minitest::Test
   class TestLayout < Argyle::Layout::Base

@@ -1,4 +1,4 @@
-require 'test'
+require_relative 'test'
 
 class BlueprintPageTest < Minitest::Test
   class TestPage1 < Argyle::Page::Base

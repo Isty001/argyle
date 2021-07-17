@@ -1,4 +1,4 @@
-require 'test'
+require_relative '../test'
 
 class StyleContainerTest < Minitest::Test
   class TestSheet < Argyle::StyleSheet::Base
