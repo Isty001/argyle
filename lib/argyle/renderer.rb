@@ -1,12 +1,11 @@
 class Argyle::Renderer
   # @param style_transformer [Argyle::View::StyleTransformer]
-  # @param globals [Argyle::Input::Globals]
   #
-  def initialize(style_transformer)
+  def initialize(style_transformer, input_reader: nil, keymap: nil, globals: nil)
     @style_transformer = style_transformer
-    @input_reader = Argyle::Input::Reader.new
-    @keymap = Argyle::Input::Keymap.new
-    @globals = Argyle::Input::Globals.new(@keymap)
+    @input_reader = input_reader || Argyle::Input::Reader.new
+    @keymap = keymap || Argyle::Input::Keymap.new
+    @globals = globals || Argyle::Input::Globals.new(@keymap)
     @views = {}
   end
 
