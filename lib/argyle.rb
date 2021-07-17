@@ -1,6 +1,8 @@
 require 'curses'
 
 module Argyle
+  VERSION = '0.0.0'.freeze
+
   class << self
     def activate
       return if active?

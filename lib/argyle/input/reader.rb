@@ -1,5 +1,5 @@
 class Argyle::Input::Reader
-  # @yieldparam [Integer] input
+  # @return [Array<Integer>]
   #
   def read
     queue = []

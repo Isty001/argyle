@@ -17,8 +17,10 @@ class Argyle::Input::Keymap
   # @param inputs [Array<Integer>]
   # @param namespace
   #
+  # @raise [Argyle::Error::NotFound] On unknown keymap namespace
+  #
   def convert(inputs, namespace)
-    raise ArgumentError.new("No keymapping for #{namespace}") unless @map.include?(namespace)
+    raise Argyle::Error::NotFound.new("Unknown keymap namespace: #{namespace}") unless @map.include?(namespace)
 
     inputs.map do |raw|
       yield @map[namespace][raw] if @map[namespace].include?(raw)
