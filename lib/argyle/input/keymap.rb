@@ -2,6 +2,8 @@ class Argyle::Input::Keymap
   def initialize
     @map = {
       global: {
+        "\t" => :focus_next,
+        Curses::KEY_BTAB => :focus_prev # shitf + tab
       },
       Argyle::Component::Menu => {
         Curses::KEY_UP => :up,
@@ -13,13 +15,9 @@ class Argyle::Input::Keymap
   end
 
   # @param inputs [Array<Integer>]
-  # @param component [Argyle::Component::Base]
+  # @param namespace
   #
-  def convert(inputs, component)
-    return unless component.in_focus?
-
-    namespace = component.class
-
+  def convert(inputs, namespace)
     raise ArgumentError.new("No keymapping for #{namespace}") unless @map.include?(namespace)
 
     inputs.map do |raw|

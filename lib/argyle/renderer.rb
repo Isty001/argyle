@@ -1,12 +1,12 @@
 class Argyle::Renderer
   # @param style_transformer [Argyle::View::StyleTransformer]
-  # @param input_reader [Argyle::Input::Reader]
-  # @param keymap [Argyle::Input::Keymap]
+  # @param globals [Argyle::Input::Globals]
   #
-  def initialize(style_transformer, input_reader: nil, keymap: nil)
+  def initialize(style_transformer)
     @style_transformer = style_transformer
-    @input_reader = input_reader || Argyle::Input::Reader.new
-    @keymap = keymap || Argyle::Input::Keymap.new
+    @input_reader = Argyle::Input::Reader.new
+    @keymap = Argyle::Input::Keymap.new
+    @globals = Argyle::Input::Globals.new(@keymap)
     @views = {}
   end
 
@@ -32,6 +32,8 @@ class Argyle::Renderer
     windows = page.layout.windows
     inputs = @input_reader.read
 
+    @globals.process(page, inputs)
+
     page.components.each do |component_id, component|
       component_klass = component.class
       area = component.area
@@ -43,9 +45,7 @@ class Argyle::Renderer
       )
     end
 
-    windows.each_value do |window|
-      window.refresh if window.touched?
-    end
+    refresh(windows)
 
     @input_reader.flush
   end
@@ -73,5 +73,11 @@ class Argyle::Renderer
     return windows[area] if windows.include?(area)
 
     raise Argyle::Error::NotFound.new("Window not found for area: #{area}. Is the area defined in the layout?")
+  end
+
+  def refresh(windows)
+    windows.each_value do |window|
+      window.refresh if window.touched?
+    end
   end
 end

@@ -9,6 +9,7 @@ class Argyle::Blueprint
   # @param page_factory [Argyle::Page::Factory]
   # @param renderer [Argyle::Renderer]
   # @param style_container [Argyle::StyleSheet::Container]
+  # @param globals [Argyle::Input::Globals]
   #
   def initialize(layout_factory: nil, layout_registry: nil, page_factory: nil, renderer: nil, style_container: nil)
     @pages = {}

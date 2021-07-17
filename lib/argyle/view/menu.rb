@@ -45,7 +45,7 @@ class Argyle::View::Menu < Argyle::View::Base
   def control(component, ctx)
     return unless ctx.focused?
 
-    @keymap.convert(ctx.inputs, component) do |input|
+    @keymap.convert(ctx.inputs, component.class) do |input|
       case input
       when :up
         component.menu.up_item
