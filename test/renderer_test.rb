@@ -11,7 +11,7 @@ class RendererTest < Minitest::Test
   end
 
   def test_add_view_invalid_component
-    renderer = Argyle::Renderer.new(mock)
+    renderer = Argyle::Renderer.new(mock, mock)
 
     error = assert_raises(Argyle::Error::TypeError) do
       renderer.add_view(String, TestView)
@@ -21,7 +21,7 @@ class RendererTest < Minitest::Test
   end
 
   def test_add_view_invalid_view
-    renderer = Argyle::Renderer.new(mock)
+    renderer = Argyle::Renderer.new(mock, mock)
 
     error = assert_raises(Argyle::Error::TypeError) do
       renderer.add_view(TestComponent, 'some string')
@@ -71,6 +71,7 @@ class RendererTest < Minitest::Test
   def test_happy_path
     container = mock
     keymap = mock
+    environment = mock
 
     windows = mock_windows
 
@@ -81,20 +82,26 @@ class RendererTest < Minitest::Test
     page.expects(:focused_component_id).returns(:test)
 
     view = mock
-    TestView.expects(:new).with(container, keymap).returns(view)
+    TestView.expects(:new).with(container, keymap, environment).returns(view)
 
     inputs = [10, 932]
-    renderer = create_happy_renderer(page, inputs, container, keymap)
+    renderer = create_happy_renderer(page, inputs, container, keymap, environment)
 
-    ctx = Argyle::View::Context.new(inputs, true)
-    Argyle::View::Context.expects(:new).with(inputs, true).returns(ctx)
-
+    ctx = create_happy_context(inputs)
     view.expects(:render).with(windows[:test], component, ctx)
 
     renderer.render(page)
   end
 
   private
+
+  def create_happy_context(inputs)
+    ctx = Argyle::View::Context.new(inputs, true)
+
+    Argyle::View::Context.expects(:new).with(inputs, true).returns(ctx)
+
+    ctx
+  end
 
   def mock_windows
     window = mock
@@ -111,10 +118,10 @@ class RendererTest < Minitest::Test
     reader = mock
     reader.expects(:read).returns(inputs)
 
-    Argyle::Renderer.new(container, input_reader: reader, globals: globals || mock)
+    Argyle::Renderer.new(container, mock, input_reader: reader, globals: globals || mock)
   end
 
-  def create_happy_renderer(page, inputs, container, keymap)
+  def create_happy_renderer(page, inputs, container, keymap, environment)
     reader = mock
     reader.expects(:read).returns(inputs)
     reader.expects(:flush)
@@ -122,7 +129,7 @@ class RendererTest < Minitest::Test
     globals = mock
     globals.expects(:process).with(page, inputs)
 
-    renderer = Argyle::Renderer.new(container, input_reader: reader, keymap: keymap, globals: globals)
+    renderer = Argyle::Renderer.new(container, environment, input_reader: reader, keymap: keymap, globals: globals)
     renderer.add_view(TestComponent, TestView)
 
     renderer

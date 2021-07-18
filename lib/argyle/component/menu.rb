@@ -26,7 +26,6 @@ class Argyle::Component::Menu < Argyle::Component::Base
     @items = items.map(&:unwrap)
     @cols = cols
     @rows = rows
-    # @controls = controls
 
     @menu = nil
     @window = nil
@@ -41,13 +40,12 @@ class Argyle::Component::Menu < Argyle::Component::Base
     @menu = menu
   end
 
-  private
-
   def delete
     super
 
     return unless fired_up?
 
     @menu.unpost
+    @menu = nil
   end
 end

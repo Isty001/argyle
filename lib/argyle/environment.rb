@@ -2,22 +2,26 @@
 #   @return [Symbol]
 #
 # @!attribute [r] current_page_id
-# @return [Symbol]
+#   @return [Symbol]
 #
 class Argyle::Environment
   attr_reader :focused_component_id, :current_page_id
 
-  # @param publisher [Argyle::Publisher]
+  # @param blueprint [Argyle::Blueprint]
   #
-  def initialize(publisher)
-    @publisher = publisher
+  def initialize(blueprint)
+    @blueprint = blueprint
   end
 
+  # @param id [Symbol]
+  #
   def focus(id)
-    @publisher.publish(:component_focus, id)
+    @blueprint.current_page.focus(id)
   end
 
+  # @param id [Symbol]
+  #
   def open_page(id)
-    @publisher.publish(:page_open, id)
+    @blueprint.current_page = id
   end
 end

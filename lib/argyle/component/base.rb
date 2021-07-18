@@ -54,7 +54,7 @@ class Argyle::Component::Base
   # @return [Curses::Window]
   #
   def window
-    raise 'Component in not fired up' unless fired_up?
+    check_readiness
 
     @window
   end
@@ -72,5 +72,11 @@ class Argyle::Component::Base
     {
       exit: :delete
     }
+  end
+
+  private
+
+  def check_readiness
+    raise 'Component in not fired up' unless fired_up?
   end
 end

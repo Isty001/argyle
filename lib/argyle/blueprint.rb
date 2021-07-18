@@ -23,13 +23,13 @@ class Argyle::Blueprint
     publisher = Argyle::Publisher.instance
     publisher.subscribe(self)
 
-    @env = Argyle::Environment.new(publisher)
-
     add_layout(:default, Argyle::Layout::Default)
     add_style_sheet(Argyle::StyleSheet::Default)
 
     add_view(Argyle::Component::Text, Argyle::View::Text)
     add_view(Argyle::Component::Menu, Argyle::View::Menu)
+
+    publisher.publish(:exit)
 
     at_exit { publisher.publish(:exit) }
   end
@@ -38,8 +38,9 @@ class Argyle::Blueprint
 
   def create_renderer
     style_transformer = Argyle::View::StyleTransformer.new(@style_container)
+    environment = Argyle::Environment.new(self)
 
-    Argyle::Renderer.new(style_transformer)
+    Argyle::Renderer.new(style_transformer, environment)
   end
 
   public
@@ -82,17 +83,13 @@ class Argyle::Blueprint
     @renderer.render(current_page)
   end
 
-  private
-
-  # @return [Argyle::Page]
+  # @return [Argyle::Page::Base]
   #
   def current_page
     raise Argyle::Error::NotFound.new('No pages defined yet') if @pages.empty?
 
     @current_page ||= pages.values.first
   end
-
-  public
 
   # @param id [Symbol]
   #

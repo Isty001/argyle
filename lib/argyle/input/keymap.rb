@@ -9,7 +9,10 @@ class Argyle::Input::Keymap
         Curses::KEY_UP => :up,
         Curses::KEY_DOWN => :down,
         Curses::KEY_RIGHT => :right,
-        Curses::KEY_LEFT => :left
+        Curses::KEY_LEFT => :left,
+        Curses::KEY_ENTER => :open,
+        "\n" => :open,
+        "\r" => :open
       }
     }
   end

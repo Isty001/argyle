@@ -40,7 +40,6 @@ end
 require_relative 'argyle/environment'
 require_relative 'argyle/positioning'
 require_relative 'argyle/publisher'
-require_relative 'argyle/subscriber'
 require_relative 'argyle/assert'
 require_relative 'argyle/blueprint'
 require_relative 'argyle/error'

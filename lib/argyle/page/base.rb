@@ -20,7 +20,13 @@ class Argyle::Page::Base
     @focused_component_id = @components.keys.first
   end
 
+  # @param id [Symbol]
+  #
+  # @raise [Argyle::Error::NotFound] If the component doesn't exist
+  #
   def focus(id)
+    raise Argyle::Error::NotFound.new("Unknown component: #{id}") unless @components.include?(id)
+
     @focused_component_id = id
   end
 
