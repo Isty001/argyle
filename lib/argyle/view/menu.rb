@@ -1,7 +1,7 @@
 class Argyle::View::Menu < Argyle::View::Base
   # @param window [Curses::Window]
   # @param component [Argyle::Component::Menu]
-  # @param ctx [Argyle::Component::Context]
+  # @param ctx [Argyle::View::Context]
   #
   def render(window, component, ctx)
     fire_up(window, component) unless component.fired_up?
@@ -16,6 +16,7 @@ class Argyle::View::Menu < Argyle::View::Base
   #
   def fire_up(window, component)
     x, y, width, height = component_gemoetry(window, component)
+
     menu_window = window.subwin(height, width, y, x)
 
     items = component.items.map do |item|

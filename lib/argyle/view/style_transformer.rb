@@ -13,15 +13,22 @@ class Argyle::View::StyleTransformer
   # @yield
   #
   def apply(window, style_ids)
-    style_ids = [:white_fg] if style_ids.to_a.empty?
-
-    init_style_list(style_ids) unless @stlye_attr_id_map.include?(style_ids)
-
-    attr = @stlye_attr_id_map[style_ids]
+    attr = compose(style_ids)
 
     window.attron(attr)
     yield
     window.attroff(attr)
+  end
+
+  # @param style_ids [Array<Symbol>]
+  # @return [Integer]
+  #
+  def compose(style_ids)
+    style_ids = [:white_fg] if style_ids.to_a.empty?
+
+    init_style_list(style_ids) unless @stlye_attr_id_map.include?(style_ids)
+
+    @stlye_attr_id_map[style_ids]
   end
 
   private

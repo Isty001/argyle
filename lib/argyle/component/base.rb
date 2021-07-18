@@ -59,10 +59,6 @@ class Argyle::Component::Base
     @window
   end
 
-  def in_focus?
-    true
-  end
-
   def delete
     if fired_up?
       @window.close

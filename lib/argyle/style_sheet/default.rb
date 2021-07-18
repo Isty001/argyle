@@ -5,7 +5,7 @@ class Argyle::StyleSheet::Default < Argyle::StyleSheet::Base
   color(:white, r: 255, g: 255, b: 255)
 
   style(:red_fg, fg: :red)
-  style(:gree_fg, fg: :green)
+  style(:green_fg, fg: :green)
   style(:blue_fg, fg: :blue)
   style(:white_fg, fg: :white)
 
