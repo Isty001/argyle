@@ -77,6 +77,6 @@ class Argyle::Component::Base
   private
 
   def check_readiness
-    raise 'Component in not fired up' unless fired_up?
+    raise Argyle::Error::RuntimeError.new('Component is not fired up') unless fired_up?
   end
 end

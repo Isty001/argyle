@@ -8,10 +8,16 @@ class Argyle::Component::MenuItem
   attr_reader :title, :actions
 
   # @param title [String]
+  # @param selectable [Boolean]
   # @param on [Hash{Symbol=>Proc] List of actions
   #
-  def initialize(title:, on: {})
+  def initialize(title:, selectable: true, on: {})
     @title = title
+    @selectable = selectable
     @actions = on
+  end
+
+  def selectable?
+    @selectable
   end
 end

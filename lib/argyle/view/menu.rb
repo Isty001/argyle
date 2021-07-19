@@ -20,7 +20,9 @@ class Argyle::View::Menu < Argyle::View::Base
     menu_window = window.subwin(height, width, y, x)
 
     raw_items = component.items.map do |item|
-      Curses::Item.new(item.title, '')
+      raw_item = Curses::Item.new(item.title, '')
+      raw_item.opts_off(Curses::O_SELECTABLE) unless item.selectable?
+      raw_item
     end
 
     menu = create_menu(raw_items, menu_window, component)
