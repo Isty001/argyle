@@ -22,6 +22,7 @@ class Argyle::Environment
   # @param id [Symbol]
   #
   def open_page(id)
-    @blueprint.current_page = id
+    Argyle::Publisher.instance.publish(:page_open, id)
+    Argyle::Publisher.instance.publish(:page_refresh)
   end
 end

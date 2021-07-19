@@ -8,7 +8,9 @@ class Argyle::Component::Table < Argyle::Component::Base
 
   # @param data [Hash{Symbol=>Array<String>}]
   #
-  def initialize(data, **args)
+  def initialize(data, **_args)
+    super(**args)
+
     @data = data
   end
 end

@@ -34,18 +34,19 @@ class Argyle::Component::Menu < Argyle::Component::Base
   # @param window [Curses::Window]
   # @param menu [Curses::Menu]
   #
-  def fire_up(window, menu)
+  def update(window, menu)
     super(window)
 
     @menu = menu
   end
 
-  def delete
+  def clear
+    if @menu
+      @menu.unpost
+      @menu = nil
+    end
+
+    # Deleting the Window before unpost causes segfault
     super
-
-    return unless fired_up?
-
-    @menu.unpost
-    @menu = nil
   end
 end

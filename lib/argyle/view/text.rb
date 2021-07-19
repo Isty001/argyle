@@ -4,11 +4,11 @@ class Argyle::View::Text < Argyle::View::Base
   # @param _ [Argyle::Component::Context]
   #
   def render(window, component, _)
-    unless component.fired_up?
-      x, y, width, height = component_gemoetry(window, component)
+    return unless component.changed?
 
-      component.fire_up(window.subwin(height, width, y, x))
-    end
+    x, y, width, height = component_gemoetry(window, component)
+
+    component.update(window.subwin(height, width, y, x))
 
     display_text(component)
   end

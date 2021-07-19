@@ -15,6 +15,14 @@ class Argyle::Layout::Factory
     klass.new(areas, windows)
   end
 
+  # @param layout [Argyle::Layout::Base]
+  #
+  def refresh(layout)
+    layout.windows.values.each(&:close)
+
+    layout.windows = layout.areas.map(&method(:create_window)).to_h
+  end
+
   private
 
   # @param area [Argyle::Layout::Area]

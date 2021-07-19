@@ -11,13 +11,15 @@ class Argyle::Layout::Base
   #
   DEFAULT_AREA = :main
 
-  attr_reader :areas, :windows
+  attr_accessor :windows
+  attr_reader :areas
 
   # @param areas [Hash{Symbol=>Argyle::Layout::Area}]
   # @param windows [Hash{Symbol=>Curses::WINDOW}] Mapped to the corresponding Area
   #
   def initialize(areas, windows)
     @areas = areas
+
     @windows = windows
   end
 

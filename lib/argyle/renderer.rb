@@ -1,13 +1,16 @@
 class Argyle::Renderer
   # @param style_transformer [Argyle::View::StyleTransformer]
   # @param environment [Argyle::Environment]
+  # @param keymap [Argyle::Input::Keymap]
+  # @param globals [Argyle::Input::Globals]
+  # @param input_reader [Argyle::Input::Reader]
   #
-  def initialize(style_transformer, environment, input_reader: nil, keymap: nil, globals: nil)
+  def initialize(style_transformer, environment, keymap: nil, globals: nil, input_reader: nil)
     @style_transformer = style_transformer
     @environment = environment
-    @input_reader = input_reader || Argyle::Input::Reader.new
     @keymap = keymap || Argyle::Input::Keymap.new
     @globals = globals || Argyle::Input::Globals.new(@keymap)
+    @input_reader = input_reader || Argyle::Input::Reader.new
     @views = {}
   end
 
@@ -30,10 +33,10 @@ class Argyle::Renderer
   # @raise [Argyle::Error::NotFound] If the layout has no associated window for the a component's area
   #
   def render(page)
-    windows = page.layout.windows
     inputs = @input_reader.read
-
     @globals.process(page, inputs)
+
+    windows = page.layout.windows
 
     page.components.each do |component_id, component|
       component_klass = component.class

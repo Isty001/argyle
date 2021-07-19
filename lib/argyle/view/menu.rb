@@ -4,7 +4,7 @@ class Argyle::View::Menu < Argyle::View::Base
   # @param ctx [Argyle::View::Context]
   #
   def render(window, component, ctx)
-    fire_up(window, component) unless component.fired_up?
+    refresh(window, component) if component.changed?
 
     control(component, ctx)
   end
@@ -14,7 +14,7 @@ class Argyle::View::Menu < Argyle::View::Base
   # @param window [Curses::Window]
   # @param component [Argyle::Component::Menu]
   #
-  def fire_up(window, component)
+  def refresh(window, component)
     x, y, width, height = component_gemoetry(window, component)
 
     menu_window = window.subwin(height, width, y, x)
@@ -28,7 +28,7 @@ class Argyle::View::Menu < Argyle::View::Base
     menu = create_menu(raw_items, menu_window, component)
     menu_window.refresh
 
-    component.fire_up(menu_window, menu)
+    component.update(menu_window, menu)
   end
 
   # @param item_map [Array<Curses::Item>]

@@ -36,19 +36,32 @@ class Argyle::Component::Base
     @relative_offsets = offset.to_h.transform_values { |m| Argyle::Positioning.parse_relative_size(m) }
     @controls = controls
 
+    @changed = true
+
     Argyle::Publisher.instance.subscribe(self)
   end
 
   # @param window [Curses::Window]
   #
-  def fire_up(window)
+  def update(window)
+    clear
+
     @window = window
+    @changed = false
   end
 
   # @return [Boolean]
   #
-  def fired_up?
-    @window.nil? == false
+  # This marker tells if the Component needs to be redrawn
+  #
+  def changed?
+    @changed
+  end
+
+  # This marks the Component to be redrawn
+  #
+  def changed!
+    @changed = true
   end
 
   # @return [Curses::Window]
@@ -59,24 +72,25 @@ class Argyle::Component::Base
     @window
   end
 
-  def delete
-    if fired_up?
-      @window.close
-      @window = nil
-    end
+  def clear
+    return unless @window
 
-    Argyle::Publisher.instance.unsubscribe(self)
+    @window.close
+    @window = nil
   end
 
   def subscriptions
     {
-      exit: :delete
+      exit: lambda do
+        clear
+        Argyle::Publisher.instance.unsubscribe(self)
+      end
     }
   end
 
   private
 
   def check_readiness
-    raise Argyle::Error::RuntimeError.new('Component is not fired up') unless fired_up?
+    raise Argyle::Error::RuntimeError.new('Component is not fired up') if @window.nil?
   end
 end

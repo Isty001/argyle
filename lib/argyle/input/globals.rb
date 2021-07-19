@@ -38,4 +38,10 @@ class Argyle::Input::Globals
 
     page.focus(ids[index])
   end
+
+  # @param page [Argyle::Page::Base]
+  #
+  def resize(page)
+    Argyle::Publisher.instance.publish(:page_refresh, page)
+  end
 end

@@ -83,6 +83,8 @@ class Argyle::Blueprint
     @renderer.render(current_page)
   end
 
+  private
+
   # @return [Argyle::Page::Base]
   #
   def current_page
@@ -93,18 +95,25 @@ class Argyle::Blueprint
 
   # @param id [Symbol]
   #
-  # @note This should be only invoked externally when setting the default Page
-  #
   def current_page=(id)
     raise ArgumentError.new("Unknow Page: #{id}") unless @pages.include?(id)
 
     @current_page = @pages[id]
   end
 
+  public
+
   def subscriptions
     {
-      page_open: :current_page=,
-      component_focus: proc { |id| current_page.focus(id) }
+      page_refresh: proc do |page|
+        page ||= current_page
+        page.components.values.each(&:changed!)
+
+        @layout_factory.refresh(page.layout)
+      end,
+      page_open: proc do |id|
+        self.current_page = id
+      end
     }
   end
 end

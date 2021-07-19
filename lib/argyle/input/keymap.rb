@@ -3,7 +3,8 @@ class Argyle::Input::Keymap
     @map = {
       global: {
         "\t" => :focus_next,
-        Curses::KEY_BTAB => :focus_prev # shitf + tab
+        Curses::KEY_BTAB => :focus_prev, # shitf + tab
+        Curses::KEY_RESIZE => :resize
       },
       Argyle::Component::Menu => {
         Curses::KEY_UP => :up,
