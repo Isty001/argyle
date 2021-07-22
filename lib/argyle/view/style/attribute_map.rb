@@ -1,4 +1,4 @@
-class Argyle::View::AttributeMap
+class Argyle::View::Style::AttributeMap
   MAP = {
     bold: Curses::A_BOLD,
     standou: Curses::A_STANDOUT,

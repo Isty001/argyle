@@ -1,4 +1,4 @@
-class Argyle::View::StyleTransformer
+class Argyle::View::Style::Transformer
   # @param style_container [Argyle::StyleSheet::Container]
   #
   def initialize(style_container)
@@ -34,7 +34,7 @@ class Argyle::View::StyleTransformer
   private
 
   def init_style_list(style_ids)
-    attributes = style_ids.select(&Argyle::View::AttributeMap.method(:include?)) || []
+    attributes = style_ids.select(&Argyle::View::Style::AttributeMap.method(:include?)) || []
 
     custom_style_ids = style_ids.reject(&attributes.method(:include?))
     custom_styles = custom_style_ids.map(&@style_container.method(:get_style))
@@ -66,7 +66,7 @@ class Argyle::View::StyleTransformer
     Curses.init_pair(pair_id, @color_id_map[fg] || -1, @color_id_map[bg] || -1)
 
     attr = attributes.reduce(0) do |result, built_in|
-      result | Argyle::View::AttributeMap[built_in]
+      result | Argyle::View::Style::AttributeMap[built_in]
     end
 
     attr | Curses.color_pair(pair_id)

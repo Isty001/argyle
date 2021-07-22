@@ -3,6 +3,12 @@ require 'singleton'
 class Argyle::Publisher
   include Singleton
 
+  # @!attribute [r] instance
+  #   @return [Argyle::Publisher]
+  #
+  class << self
+  end
+
   def initialize
     @subscriptions = {}
   end

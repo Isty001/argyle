@@ -3,5 +3,6 @@ class Argyle::View::Table < Argyle::View::Base
   # @param component [Argyle::Component::Table]
   # @param _ [Argyle::Component::Context]
   #
-  def render(window, component, _); end
+  def render(window, component, _)
+  end
 end

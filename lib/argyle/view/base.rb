@@ -1,5 +1,5 @@
 class Argyle::View::Base
-  # @param style_transformer [Argyle::View::StyleTransformer]
+  # @param style_transformer [Argyle::View::Style::Transformer]
   # @param keymap [Argyle::Input::Keymap]
   # @param environment [Argyle::Environment]
   #

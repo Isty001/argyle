@@ -79,6 +79,16 @@ class Argyle::Page::Base
       Argyle::Prototype.new(Argyle::Component::MenuItem, args)
     end
 
+    # @param id [Symbol]
+    # @param (see Argyle::Component::Table#initialize)
+    #
+    # @see Argyle::Component::Table
+    #
+    def table(id:, **args)
+      args[:area] = @current_area
+
+      component_prototypes[id] = Argyle::Prototype.new(Argyle::Component::Table, args)
+    end
     # @!endgroup
     #
     # @param id [Symbol]

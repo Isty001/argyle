@@ -36,7 +36,7 @@ class Argyle::StyleSheet::Container
   end
 
   def check_attribute_existence(style_id, attribute_id)
-    return if Argyle::View::AttributeMap.include?(attribute_id)
+    return if Argyle::View::Style::AttributeMap.include?(attribute_id)
 
     raise Argyle::Error::NotFound.new("Attribute #{attribute_id} not found for style: #{style_id}")
   end

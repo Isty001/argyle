@@ -37,7 +37,7 @@ class Argyle::Blueprint
   private
 
   def create_renderer
-    style_transformer = Argyle::View::StyleTransformer.new(@style_container)
+    style_transformer = Argyle::View::Style::Transformer.new(@style_container)
     environment = Argyle::Environment.new(self)
 
     Argyle::Renderer.new(style_transformer, environment)

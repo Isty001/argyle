@@ -1,5 +1,5 @@
 class Argyle::Renderer
-  # @param style_transformer [Argyle::View::StyleTransformer]
+  # @param style_transformer [Argyle::View::Style::Transformer]
   # @param environment [Argyle::Environment]
   # @param keymap [Argyle::Input::Keymap]
   # @param globals [Argyle::Input::Globals]

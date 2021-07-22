@@ -11,6 +11,7 @@ class Argyle::Environment
   #
   def initialize(blueprint)
     @blueprint = blueprint
+    @publisher = Argyle::Publisher.instance
   end
 
   # @param id [Symbol]
@@ -22,7 +23,7 @@ class Argyle::Environment
   # @param id [Symbol]
   #
   def open_page(id)
-    Argyle::Publisher.instance.publish(:page_open, id)
-    Argyle::Publisher.instance.publish(:page_refresh)
+    @publisher.publish(:page_open, id)
+    @publisher.publish(:page_refresh)
   end
 end
