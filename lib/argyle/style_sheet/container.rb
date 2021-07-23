@@ -54,4 +54,10 @@ class Argyle::StyleSheet::Container
   def get_color(id)
     @colors[id] or raise Argyle::Error::NotFound.new("Color not found: #{id}")
   end
+
+  # @return Array<Symbol>
+  #
+  def style_ids
+    @styles.keys
+  end
 end
