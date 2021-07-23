@@ -52,8 +52,8 @@ class Argyle::View::Base
     [
       x + 1,
       y + 1,
-      [width - 2, 0].max,
-      [height - 2, 0].max
+      [width - 2, 1].max,
+      [height - 2, 1].max
     ]
   end
 
