@@ -22,7 +22,7 @@ class Argyle::Page::Base
 
   # @param id [Symbol]
   #
-  # @raise [Argyle::Error::NotFound] If the component doesn't exist
+  # @raise [Argyle::Error::NotFound] If the component doesn't exist.
   #
   def focus(id)
     raise Argyle::Error::NotFound.new("Unknown component: #{id}") unless @components.include?(id)
@@ -68,7 +68,6 @@ class Argyle::Page::Base
       component_prototypes[id] = Argyle::Prototype.new(Argyle::Component::Menu, args)
     end
 
-    # @param id [Symbol]
     # @param (see Argyle::Component::Menu#initialize)
     #
     # @see Argyle::Component::MenuItem
@@ -89,6 +88,7 @@ class Argyle::Page::Base
 
       component_prototypes[id] = Argyle::Prototype.new(Argyle::Component::Table, args)
     end
+
     # @!endgroup
     #
     # @param id [Symbol]
